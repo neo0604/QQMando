@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QQMando · 漫剧行业动态监控</title>
+<meta name="description" content="持续追踪漫剧行业动态 × QQ漫剧业务策略参考">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎬%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#0f1115; --bg-card:#181b22; --bg-hover:#1f232c;
+    --border:#2a2f3a; --border-strong:#3a4050;
+    --text:#e8eaee; --text-dim:#9aa0ac; --text-muted:#6b7280;
+    --brand:#ff6b3d; --brand-dim:#7a3420;
+    --accent:#3d7eff; --accent-dim:#1e3a66;
+    --green:#3ecf8e; --red:#ef4444; --yellow:#f59e0b;
+    --radius:10px; --radius-sm:6px;
+    --font: -apple-system, BlinkMacSystemFont, "SF Pro SC", "PingFang SC", "Helvetica Neue", sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg); color:var(--text); font-family:var(--font);
+    line-height:1.65; font-size:15px;
+    min-height:100vh;
+  }
+  a{color:var(--accent); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  /* Header */
+  .header{
+    position:sticky; top:0; z-index:100;
+    background:rgba(15,17,21,0.85); backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+    padding:14px 24px;
+  }
+  .header-inner{max-width:1280px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+  .logo{font-size:18px; font-weight:700; letter-spacing:-0.3px;}
+  .logo span{color:var(--brand);}
+  .meta{font-size:13px; color:var(--text-dim);}
+  .nav{display:flex; gap:4px; flex-wrap:wrap;}
+  .nav a{
+    color:var(--text-dim); font-size:13px; padding:6px 10px;
+    border-radius:var(--radius-sm); text-decoration:none;
+  }
+  .nav a:hover{background:var(--bg-hover); color:var(--text);}
+
+  /* Hero */
+  .hero{
+    max-width:1280px; margin:0 auto; padding:40px 24px 24px;
+  }
+  .hero h1{
+    font-size:34px; font-weight:800; letter-spacing:-0.8px; line-height:1.2;
+    margin-bottom:12px;
+  }
+  .hero h1 em{font-style:normal; color:var(--brand);}
+  .hero p{color:var(--text-dim); font-size:15px; max-width:780px;}
+  .tagline{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:4px 10px; border-radius:999px;
+    background:var(--brand-dim); color:var(--brand);
+    font-size:12px; font-weight:500; margin-bottom:16px;
+  }
+  .tagline::before{content:'●'; font-size:8px;}
+
+  /* KPI */
+  .kpi-grid{
+    max-width:1280px; margin:0 auto; padding:0 24px 32px;
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px;
+  }
+  .kpi{
+    background:var(--bg-card); border:1px solid var(--border);
+    border-radius:var(--radius); padding:16px 18px;
+  }
+  .kpi-label{font-size:12px; color:var(--text-dim); margin-bottom:6px; font-weight:500;}
+  .kpi-value{font-size:24px; font-weight:700; letter-spacing:-0.5px; line-height:1.2;}
+  .kpi-value small{font-size:13px; color:var(--text-dim); font-weight:500;}
+  .kpi-trend{font-size:12px; color:var(--green); margin-top:4px;}
+  .kpi-trend.down{color:var(--red);}
+
+  /* Main layout */
+  .container{max-width:1280px; margin:0 auto; padding:0 24px 60px;}
+  section{margin-bottom:44px; scroll-margin-top:80px;}
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid var(--border);
+  }
+  .section-head h2{
+    font-size:22px; font-weight:700; letter-spacing:-0.3px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .section-head h2::before{
+    content:''; width:4px; height:20px; background:var(--brand); border-radius:2px;
+  }
+  .section-head .hint{font-size:13px; color:var(--text-muted);}
+
+  /* Cards grid */
+  .grid{display:grid; gap:14px;}
+  .grid-2{grid-template-columns:repeat(auto-fit, minmax(380px, 1fr));}
+  .grid-3{grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));}
+  .card{
+    background:var(--bg-card); border:1px solid var(--border);
+    border-radius:var(--radius); padding:18px 20px;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .card:hover{border-color:var(--border-strong);}
+  .card h3{
+    font-size:16px; font-weight:600; margin-bottom:8px;
+    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+  }
+  .card p{color:var(--text-dim); font-size:14px;}
+  .card ul{color:var(--text-dim); font-size:14px; padding-left:20px; margin-top:6px;}
+  .card ul li{margin-bottom:4px;}
+  .card .source{
+    display:inline-block; margin-top:10px; font-size:12px;
+    color:var(--text-muted);
+  }
+
+  /* Badges */
+  .badge{
+    display:inline-block; padding:2px 8px; border-radius:4px;
+    font-size:11px; font-weight:600; letter-spacing:0.2px;
+  }
+  .badge-new{background:var(--brand-dim); color:var(--brand);}
+  .badge-hot{background:#401a1a; color:var(--red);}
+  .badge-key{background:var(--accent-dim); color:var(--accent);}
+  .badge-warn{background:#3d2f10; color:var(--yellow);}
+  .badge-ok{background:#0f3a28; color:var(--green);}
+
+  /* Tables */
+  .tbl{width:100%; border-collapse:collapse; font-size:13px;}
+  .tbl th, .tbl td{
+    padding:10px 12px; text-align:left; border-bottom:1px solid var(--border);
+  }
+  .tbl th{color:var(--text-dim); font-weight:500; font-size:12px;}
+  .tbl td{color:var(--text);}
+  .tbl td.num{font-family:"SF Mono", Monaco, monospace; font-weight:600;}
+  .tbl tr:hover td{background:var(--bg-hover);}
+
+  /* News list */
+  .news-list{display:flex; flex-direction:column; gap:10px;}
+  .news-item{
+    display:flex; gap:14px; padding:14px 16px;
+    background:var(--bg-card); border:1px solid var(--border);
+    border-radius:var(--radius); transition:border-color 0.15s;
+  }
+  .news-item:hover{border-color:var(--border-strong);}
+  .news-date{
+    font-size:12px; color:var(--text-muted); font-family:"SF Mono", Monaco, monospace;
+    min-width:55px; padding-top:2px;
+  }
+  .news-body{flex:1; min-width:0;}
+  .news-title{font-size:14px; font-weight:500; margin-bottom:4px; line-height:1.45;}
+  .news-title a{color:var(--text);}
+  .news-title a:hover{color:var(--brand); text-decoration:none;}
+  .news-meta{font-size:12px; color:var(--text-muted);}
+
+  /* QQ Strategy section */
+  .qq-section{
+    background:linear-gradient(135deg, rgba(61,126,255,0.08), rgba(255,107,61,0.04));
+    border:1px solid var(--border-strong); border-radius:14px;
+    padding:28px 28px 20px;
+  }
+  .qq-section .section-head{border-bottom-color:var(--border-strong);}
+  .callout{
+    background:var(--bg-card); border-left:3px solid var(--brand);
+    padding:12px 16px; border-radius:var(--radius-sm);
+    margin:12px 0;
+  }
+  .callout strong{color:var(--brand);}
+
+  /* Insight */
+  .insight{
+    background:var(--bg-card); border:1px solid var(--border);
+    border-left:3px solid var(--accent); border-radius:var(--radius);
+    padding:16px 20px; margin-bottom:14px;
+  }
+  .insight-title{font-size:15px; font-weight:600; margin-bottom:6px; color:var(--accent);}
+  .insight p{font-size:14px; color:var(--text-dim);}
+
+  /* Footer */
+  .footer{
+    max-width:1280px; margin:0 auto; padding:24px;
+    border-top:1px solid var(--border);
+    color:var(--text-muted); font-size:13px;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+  .footer a{color:var(--text-dim);}
+
+  @media (max-width:640px){
+    .hero h1{font-size:26px;}
+    .grid-2, .grid-3{grid-template-columns:1fr;}
+    .qq-section{padding:20px 16px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">QQ<span>Mando</span> · 漫剧行业动态监控</div>
+    <nav class="nav">
+      <a href="#market">市场大盘</a>
+      <a href="#news">行业动态</a>
+      <a href="#platform">平台格局</a>
+      <a href="#content">内容供给</a>
+      <a href="#hits">爆款案例</a>
+      <a href="#tech">技术·AI</a>
+      <a href="#regulation">政策监管</a>
+      <a href="#overseas">出海</a>
+      <a href="#qq">QQ 策略参考</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <span class="tagline">持续更新 · 全网+小红书 情报聚合</span>
+  <h1>漫剧行业动态 <em>×</em> QQ漫剧业务策略参考</h1>
+  <p>2026年最快增长的内容赛道，用户规模从1.2亿跃升至2.8亿。这里沉淀一线行业情报，对照 QQ 漫剧"社交化"差异路线，输出可落地的策略建议。</p>
+</section>
+
+<!-- KPI -->
+<div class="kpi-grid">
+  <div class="kpi">
+    <div class="kpi-label">短剧行业月活</div>
+    <div class="kpi-value">7.18<small>亿</small></div>
+    <div class="kpi-trend">独立APP同比 +50%+</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">AI漫剧市场规模（2026E）</div>
+    <div class="kpi-value">240<small>亿元</small></div>
+    <div class="kpi-trend">同比 +46.6%</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">红果免费短剧 DAU</div>
+    <div class="kpi-value">破<small>亿</small></div>
+    <div class="kpi-trend">Q1 日活破亿，漫剧MAU 2404万</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">火龙漫剧 DAU（3/31）</div>
+    <div class="kpi-value">95.9<small>万</small></div>
+    <div class="kpi-trend">上线50天·人均时长53.7min</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">投流日耗（2月）</div>
+    <div class="kpi-value">5000<small>万/天</small></div>
+    <div class="kpi-trend">vs 去年12月 2000万/天</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">漫剧用户规模</div>
+    <div class="kpi-value">2.8<small>亿</small></div>
+    <div class="kpi-trend">vs 2025年 1.2亿</div>
+  </div>
+</div>
+
+<main class="container">
+
+<!-- 市场大盘 -->
+<section id="market">
+  <div class="section-head">
+    <h2>市场大盘</h2>
+    <span class="hint">数据来源：QuestMobile《2026短剧行业洞察报告》、艾媒咨询、DataEye</span>
+  </div>
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>🚀 增速 <span class="badge badge-hot">历史最快</span></h3>
+      <p>2026年是中国内容产业增速最快的赛道，没有之一。AI漫剧年增速 276%，用户从 1.2亿 翻倍到 2.8亿。"这是供需两端同时爆发的典型早期红利窗口。"</p>
+      <ul>
+        <li>2024 市场规模：50亿</li>
+        <li>2025 市场规模：168–200亿</li>
+        <li>2026E 市场规模：240–250亿</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>💰 生产成本 · 产能</h3>
+      <table class="tbl" style="margin-top:6px;">
+        <thead><tr><th>类型</th><th>单价</th><th>单剧成本</th></tr></thead>
+        <tbody>
+          <tr><td>2D 精品漫</td><td class="num">1000元/min</td><td class="num">~10w</td></tr>
+          <tr><td>3D 动态漫</td><td class="num">2000–2500元/min</td><td class="num">10–20w</td></tr>
+          <tr><td>AI 仿真人漫</td><td class="num">3000元/min</td><td class="num">20–30w</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:8px; font-size:13px;">精品漫单月产能 30–50部；解说/沙雕漫可达 1000–2000部。成本构成：剧本 10–15%、算力 30–40%、<strong>人力 40–50%</strong>。</p>
+    </div>
+    <div class="card">
+      <h3>👥 用户画像</h3>
+      <p>漫剧核心用户与 QQ 高度重合：<strong>18–35岁年轻群体</strong>，移动互联网原住民。男频占比 80–90%，女频 10–20%但是最大增量——女频虽头部不多但整体数据非常好，"小红书自来水传播"。</p>
+    </div>
+    <div class="card">
+      <h3>📺 平台格局</h3>
+      <p>"一超多强"格局：</p>
+      <ul>
+        <li><strong>红果免费短剧</strong>：MAU 3.04亿（+84.6%），漫剧MAU 2404万</li>
+        <li><strong>河马剧场</strong>：MAU 0.39亿（行业第二）</li>
+        <li><strong>火龙漫剧</strong>：DAU 95.9万，人均时长 53.7分钟</li>
+        <li><strong>百度柚漫剧</strong>：筹备中，10倍薪资挖人</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 最新动态 -->
+<section id="news">
+  <div class="section-head">
+    <h2>最新行业动态</h2>
+    <span class="hint">按时间倒序 · 每次更新会刷新</span>
+  </div>
+  <div class="news-list">
+    <div class="news-item">
+      <div class="news-date">04/16</div>
+      <div class="news-body">
+        <div class="news-title">
+          <span class="badge badge-new">腾讯</span>
+          <a href="https://www.ithome.com/0/940/213.htm" target="_blank">腾讯视频发布 WorkRally，首款漫剧制作工业级 AI 平台</a>
+        </div>
+        <div class="news-meta">面向 2D/3D 动漫及 AI 仿真人剧，基于腾讯云的 AIGC 全流程工具集，本质为 CLI 工具，可被 AI Agent 驱动。与火龙升级漫剧合作政策同步发布。</div>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-date">04/16</div>
+      <div class="news-body">
+        <div class="news-title">
+          <span class="badge badge-hot">政策</span>
+          <a href="https://finance.sina.com.cn/wm/2026-04-16/doc-inhusvkh1598823.shtml" target="_blank">火龙漫剧 × 腾讯视频升级合作政策：S+级保底上不封顶</a>
+        </div>
+        <div class="news-meta">从"流量灌溉"转向"价值深耕"。解说漫系数：火龙0.5、腾讯视频仅0.3。明显收紧低质内容扶持。</div>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-date">04/13</div>
+      <div class="news-body">
+        <div class="news-title">
+          <span class="badge badge-key">数据</span>
+          <a href="https://www.thepaper.cn/newsDetail_forward_32923779" target="_blank">QuestMobile《2026短剧行业洞察报告》：用户规模7.18亿</a>
+        </div>
+        <div class="news-meta">独立APP月活3.35亿、小程序4.27亿，同比均超50%。红果漫剧MAU 2404万，火龙漫剧DAU 95.9万。</div>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-date">04/10</div>
+      <div class="news-body">
+        <div class="news-title">
+          <span class="badge badge-warn">监管</span>
+          <a href="https://www.sohu.com/a/1007232638_114941" target="_blank">红果一季度下架1718部AI漫剧，专项核查1.5万部</a>
+        </div>
+        <div class="news-meta">涉及未授权、低质、擦边等违规。4月7日起进一步收严漫剧内容审核标准。"保底躺赚"时代终结，转向精品分账。</div>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-date">04/01</div>
+      <div class="news-body">
+        <div class="news-title">
+          <span class="badge badge-warn">政策</span>
+          <a href="https://m.thepaper.cn/newsDetail_forward_32869681" target="_blank">广电总局 AI 漫剧新规落地：未备案全网强制下线</a>
+        </div>
+        <div class="news-meta">4月1日起"先备案后上线"，重点管控 AI 生成内容、版权、未成年人保护。合规成为生存底线。</div>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-date">03/30</div>
+      <div class="news-body">
+        <div class="news-title">
+          <span class="badge badge-key">行业</span>
+          <a href="https://www.36kr.com/p/3744995470786816" target="_blank">36氪：2026 AI漫剧趋势报告 · 风口浪尖2026见分晓</a>
+        </div>
+        <div class="news-meta">平台圈地、资本涌入、技术公司成"标准共建者"。爆款率仅4%，精品化成关键词。</div>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-date">03/24</div>
+      <div class="news-body">
+        <div class="news-title">
+          <span class="badge badge-key">生态</span>
+          <a href="https://k.sina.com.cn/article_7879922982_1d5ae15260190ab6ga.html" target="_blank">紫云山AIGC微短剧大会：阅文+红果+掌阅+技术公司合力建标准</a>
+        </div>
+        <div class="news-meta">阅文 IP 全面开放、红果保底激励、掌阅搭建生成工具——内容侧第一梯队布局基本成型。</div>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-date">03/19</div>
+      <div class="news-body">
+        <div class="news-title">
+          <span class="badge badge-ok">财报</span>
+          <a href="https://finance.sina.cn/2026-03-19/detail-inhrpsps4582887.d.html" target="_blank">阅文 2025 全年业绩：AI漫剧收入破亿元大关</a>
+        </div>
+        <div class="news-meta">十部漫剧播放破亿、百部破千万。"IP+AI"成为新增长引擎，2026 继续重点布局。</div>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-date">03/18</div>
+      <div class="news-body">
+        <div class="news-title">
+          <span class="badge badge-warn">红果政策</span>
+          <a href="https://www.tahou.com/article/200990911852072965" target="_blank">红果扶持政策转向：告别"保底躺赚"，拥抱"精品分账"</a>
+        </div>
+        <div class="news-meta">向AI仿真人漫倾斜，收紧低质内容的保底，行业真正进入精品化阶段。</div>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-date">03/03</div>
+      <div class="news-body">
+        <div class="news-title">
+          <span class="badge badge-hot">爆款</span>
+          <a href="https://news.qq.com/rain/a/20260303A05GTF00" target="_blank">首个"漫剧春节档"：《西游，错把玉帝当亲爹》35小时破亿</a>
+        </div>
+        <div class="news-meta">星火深智出品，10人团队、20天周期、10万算力成本，红果历史第一热度。春节档共有《大小姐，你把恶魔执事调成啥了》等多部破圈。</div>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-date">02/05</div>
+      <div class="news-body">
+        <div class="news-title">
+          <span class="badge badge-new">腾讯</span>
+          <a href="https://news.qq.com/rain/a/20260205A02SF300" target="_blank">腾讯推出"火龙漫剧"APP，正式入场 AI 漫剧赛道</a>
+        </div>
+        <div class="news-meta">腾讯视频内部创新项目，主打"免费爽看"。用户在腾讯视频主端无法直接观看漫剧，需下载火龙。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 平台格局 -->
+<section id="platform">
+  <div class="section-head">
+    <h2>平台格局</h2>
+    <span class="hint">主要分发方的策略 · 保底 · 分账</span>
+  </div>
+  <table class="tbl" style="background:var(--bg-card); border-radius:var(--radius); overflow:hidden;">
+    <thead>
+      <tr>
+        <th>平台</th><th>定位</th><th>保底</th><th>分成</th><th>状态</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>红果</strong>（字节）</td>
+        <td>算法分发+广告变现</td>
+        <td class="num">2–8万/部，超头部可达360万</td>
+        <td class="num">独家基础20%，叠加扶持可达90–95%</td>
+        <td><span class="badge badge-hot">月分账5亿，遥遥领先</span></td>
+      </tr>
+      <tr>
+        <td><strong>火龙</strong>（腾讯视频）</td>
+        <td>IP+版权+分账</td>
+        <td class="num">部分特定CP给保底，S+级上不封顶</td>
+        <td class="num">独家200%返点，非独家100%</td>
+        <td><span class="badge badge-new">上线50天，榜单被中文在线占据十几天</span></td>
+      </tr>
+      <tr>
+        <td><strong>快手</strong></td>
+        <td>PGC补贴+UGC激励</td>
+        <td class="num">无</td>
+        <td class="num">99%，投流4%返点</td>
+        <td>入局中</td>
+      </tr>
+      <tr>
+        <td><strong>百度柚漫剧</strong></td>
+        <td>独立App</td>
+        <td>—</td>
+        <td>—</td>
+        <td><span class="badge badge-warn">筹备中，10倍薪资挖人</span></td>
+      </tr>
+      <tr>
+        <td><strong>小红书</strong></td>
+        <td>女频+自来水传播</td>
+        <td>—</td>
+        <td>—</td>
+        <td>春节档100部仅10部独家，以二轮剧为主</td>
+      </tr>
+      <tr style="background:var(--accent-dim); color:#fff;">
+        <td><strong>QQ漫剧</strong>（规划中）</td>
+        <td>社交化差异路线</td>
+        <td class="num">无保底</td>
+        <td class="num">基础50%，最高100%</td>
+        <td><span class="badge badge-key">5月-6月 MVP → Q3 全量</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 内容供给 -->
+<section id="content">
+  <div class="section-head">
+    <h2>内容供给方（CP）全景</h2>
+    <span class="hint">阅文/中文在线/点众/灵矩/星火等 · 产能+合作模式</span>
+  </div>
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>📚 传统内容平台（自有版权IP）</h3>
+      <table class="tbl">
+        <thead><tr><th>公司</th><th>月产能</th><th>特点</th></tr></thead>
+        <tbody>
+          <tr><td>阅文</td><td class="num">30–40部</td><td>与QQ深度合作，自有IP，独家对接火龙/红果</td></tr>
+          <tr><td>中文在线</td><td class="num">50部</td><td>独家内容占70%，《仙人归来》代表作</td></tr>
+          <tr><td>七猫</td><td class="num">1000部</td><td>多为合制，体量大但入局晚，有自有App</td></tr>
+          <tr><td>点众</td><td class="num">200部</td><td>全球第二大短剧平台，真人主业，刚布局漫剧</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>🎨 头部漫剧公司</h3>
+      <table class="tbl">
+        <thead><tr><th>公司</th><th>月产能</th><th>特点</th></tr></thead>
+        <tbody>
+          <tr><td>灵矩动漫</td><td class="num">50–80部</td><td>《末日壁垒》，头部梯队，多数独家给红果</td></tr>
+          <tr><td>友和文化</td><td class="num">30–40部</td><td>2024底全面切入AI漫剧赛道</td></tr>
+          <tr><td>星火深智</td><td class="num">25–30部</td><td><strong>技术第一梯队</strong>，《西游：错把玉帝当亲爹》35小时破亿</td></tr>
+          <tr><td>灵漫快创</td><td class="num">40–60部</td><td>主打游戏类漫剧，《气运三角洲》过亿</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>🌊 长剧/出海/其他</h3>
+      <table class="tbl">
+        <thead><tr><th>公司</th><th>月产能</th><th>特点</th></tr></thead>
+        <tbody>
+          <tr><td>恒星引力</td><td>少量精品</td><td>国内头部长剧公司，只做超头部</td></tr>
+          <tr><td>井漫</td><td class="num">1000部</td><td>出海第一梯队，北美为主，tiktok/facebook</td></tr>
+          <tr><td>炫佳科技</td><td class="num">5部</td><td>《妖龙古帝》、AI工具 Kino视界</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>🔗 QQ 可拿到的内容（首月900+部）</h3>
+      <ul>
+        <li>阅文集团：<strong>300部</strong>（100部/月，已确认）</li>
+        <li>点众：<strong>800部精品 + 1000部讲书漫</strong>（测试期30部试水，初步意向）</li>
+        <li>中文在线：<strong>300部</strong>（20部/月，初步意向）</li>
+        <li>友和：<strong>100–200部</strong>（20部/月）</li>
+        <li>其他CP：30部（洽谈中）</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 爆款案例 -->
+<section id="hits">
+  <div class="section-head">
+    <h2>爆款案例库</h2>
+    <span class="hint">可复盘、可参考的标杆作品</span>
+  </div>
+  <div class="grid grid-3">
+    <div class="card">
+      <h3>《西游，错把玉帝当亲爹》 <span class="badge badge-hot">标杆</span></h3>
+      <p>星火深智出品 · 男频神话</p>
+      <ul>
+        <li>35小时播放破亿</li>
+        <li>全网累计 2.3亿 · 红果11天霸榜</li>
+        <li>10人团队 · 20天周期 · 10万算力成本</li>
+        <li>突破"爽剧同质化"的黑马</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>《气运三角洲，我凭操作吊打全球》 <span class="badge badge-key">游戏向</span></h3>
+      <p>灵漫快创出品 · 游戏漫剧代表作</p>
+      <ul>
+        <li>29小时播放破2亿</li>
+        <li>"游戏×漫剧"典型 · 抖音数据优异</li>
+        <li>为 QQ"边看边玩"路线提供范式</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>《末日壁垒》 <span class="badge badge-key">男频</span></h3>
+      <p>灵矩动漫 · 头部梯队</p>
+      <ul>
+        <li>上线不到一周巨量消耗破峰</li>
+        <li>独家红果 · 少量抖音/快手/视频号投流</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>《宇宙尽头的书店》 <span class="badge badge-ok">女频/科幻</span></h3>
+      <p>火龙漫剧 · 女频精品化代表</p>
+      <ul>
+        <li>火龙主推，验证女频向商业化可行</li>
+        <li>画质 + 情绪节奏均高水平</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>《好一个乖乖女》 <span class="badge badge-key">出圈</span></h3>
+      <p>点众出品 · 跨平台传播典型</p>
+      <ul>
+        <li>小红书 24% 用户提及</li>
+        <li>带动点众漫剧布局信号</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>《大小姐，你把恶魔执事调成啥了》 <span class="badge badge-ok">女频</span></h3>
+      <p>春节档女频破圈 · 小红书自来水</p>
+      <ul>
+        <li>甜宠+反差 · 女频头部</li>
+        <li>小红书种草→抖音播放的典型链路</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 技术 AI -->
+<section id="tech">
+  <div class="section-head">
+    <h2>技术 · AI 工具</h2>
+    <span class="hint">工具链快速迭代，成本持续下探</span>
+  </div>
+  <div class="grid grid-3">
+    <div class="card">
+      <h3>腾讯 WorkRally <span class="badge badge-new">4/16新发</span></h3>
+      <p>首款漫剧制作工业级 AI 平台，基于腾讯云，面向 AI Agent 的 AIGC 漫剧视频创作全流程 CLI 工具集。2D/3D/仿真人全覆盖。</p>
+      <a class="source" href="https://workrally.qq.com/" target="_blank">workrally.qq.com →</a>
+    </div>
+    <div class="card">
+      <h3>Seedance（字节）</h3>
+      <p>字节跳动视频生成工具。首尾帧控制实现连贯叙事，直接推动了 AI 仿真人漫的热潮。Seedance 2.0 于 2026/2 上线。</p>
+    </div>
+    <div class="card">
+      <h3>腾讯云 / 商汤 / 万兴</h3>
+      <p>为漫剧公司提供自动化分镜、固定角色+几十分镜并行生产等工具。工具服务已经非常成熟。</p>
+    </div>
+    <div class="card">
+      <h3>炫佳科技 Kino视界</h3>
+      <p>腰部漫剧公司自研 AI 工具。"技术公司正在成为 AI 漫剧的标准共建者"。</p>
+    </div>
+    <div class="card">
+      <h3>脚本/剧本：DeepSeek / 豆包 / 通义</h3>
+      <p>AI 写剧本与改编已成标配。剧本占总成本 10–15%，但是爆款核心。</p>
+    </div>
+    <div class="card">
+      <h3>成本下降曲线 <span class="badge badge-key">关键</span></h3>
+      <p>漫剧制作成本从"千元跌至百元"——按 aimjfront 复盘。AI 将人力成本（原占 40–50%）大幅压缩，是精品化的主要驱动力。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 政策监管 -->
+<section id="regulation">
+  <div class="section-head">
+    <h2>政策 · 监管</h2>
+    <span class="hint">合规成为生存底线</span>
+  </div>
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>🚨 4/1 广电新规落地 <span class="badge badge-warn">强监管</span></h3>
+      <p>国家广电总局明确：未履行备案程序的存量动画微短剧 <strong>全网强制下线</strong>，新作必须"先备案后上线"。</p>
+      <ul>
+        <li>AIGC类、漫画类首次纳入</li>
+        <li>重点监管：版权、未成年人保护、内容红线</li>
+        <li>对小团队、野蛮生长模式打击最大</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🛡️ 红果主动治理</h3>
+      <p>一季度下架违规 AI 漫剧 1718部，专项核查 1.5万部，额外处置 670部。4/7 起进一步收严审核标准。</p>
+      <ul>
+        <li>未授权 IP → 下架</li>
+        <li>AI 素材违规 → 下架</li>
+        <li>低质解说/擦边 → 下架</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>⚖️ 版权与原创保护</h3>
+      <p>国家知识产权局明确提出要为 AI 漫剧"立规"。版权是平台最大隐性成本，对 QQ 而言，绑定阅文/腾讯视频 IP 是安全港。</p>
+    </div>
+    <div class="card">
+      <h3>🔄 平台政策转向</h3>
+      <p>红果从"保底躺赚"→"精品分账"，火龙从"流量灌溉"→"价值深耕"。全行业转向精品化，对中小CP是重大利空、对有质量CP是利好。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 出海 -->
+<section id="overseas">
+  <div class="section-head">
+    <h2>出海动态</h2>
+    <span class="hint">海外用户付费意愿强，窗口期打开</span>
+  </div>
+  <div class="grid grid-3">
+    <div class="card">
+      <h3>🌏 海外市场规模</h3>
+      <p>2025年海外微短剧产业规模 <strong>40亿美元</strong>，2026E 超 50亿美元。25年内购收入破 20亿美元。</p>
+    </div>
+    <div class="card">
+      <h3>📱 主要阵地</h3>
+      <ul>
+        <li><strong>ReelShort / DramaBox</strong>：北美单日流水破百万美金</li>
+        <li><strong>TikTok / Facebook</strong>：主要分发</li>
+        <li><strong>井漫</strong>：国内出海第一梯队，1000部/月</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🎯 海外偏好</h3>
+      <p>系统/逆袭/情感是漫剧热门题材，通常以组合形式呈现。<strong>超半数海外用户愿为 AI 参与制作的短剧付费</strong>。</p>
+    </div>
+  </div>
+</section>
+
+<!-- QQ 策略 -->
+<section id="qq" class="qq-section">
+  <div class="section-head">
+    <h2>QQ 漫剧策略参考 · 行业信号 → 行动建议</h2>
+    <span class="hint">基于 0327/0417 两份内部汇报 + 行业情报交叉推导</span>
+  </div>
+
+  <div class="callout">
+    <strong>核心定位</strong>：不做第二个红果，不做第二个火龙。依托 IM 生态、游戏协同、AI玩法，走"<strong>社交化漫剧</strong>"的差异化路径。5 亿 MAU 天然流量 × 35 岁以下年轻用户与漫剧受众高度重合，是 QQ 的核心资产。
+  </div>
+
+  <div class="insight">
+    <div class="insight-title">🎯 信号 1：行业从"保底躺赚"转向"精品分账"</div>
+    <p><strong>行业证据</strong>：红果、火龙双双收紧低质内容的保底；广电新规强制备案。<br>
+    <strong>对 QQ 的启示</strong>：QQ 初版政策"<strong>无保底 + 最高100%分成 + 全网播放量超100万的内容优先</strong>"与行业趋势完全对齐，且对优质CP是正向激励。建议在初期就强化"优质内容评级（S+/S/A/B）"的运营动作，把"精品优先"做成 QQ 的品牌标签。</p>
+  </div>
+
+  <div class="insight">
+    <div class="insight-title">🎮 信号 2：游戏×漫剧是2026最重要融合方向</div>
+    <p><strong>行业证据</strong>：《气运三角洲》29小时破2亿；和平精英、王者荣耀主动找短剧/漫剧合作；37互娱、米哈游也在接触 CP 做定制系列。腾讯长青游戏（三角洲行动、王者、金铲铲、DNF）天然具备漫剧化基础。<br>
+    <strong>对 QQ 的启示</strong>：这是 QQ 真正的"护城河"，整个腾讯生态里 QQ 是最有资格做游戏漫剧落地场景的。建议：
+    <ul>
+      <li><strong>抢 IP 首发权</strong>：与天美/琳琅协同，三角洲2、王者新赛季、新游宣发的配套漫剧首发放 QQ</li>
+      <li><strong>"边看边玩"闭环</strong>：漫剧播放页"立即体验"→ 跳转游戏下载/小游戏</li>
+      <li><strong>剧情分支×游戏奖励</strong>：互动漫剧剧情选择 → 解锁游戏道具/皮肤（借鉴《我在王者当大侠》）</li>
+    </ul></p>
+  </div>
+
+  <div class="insight">
+    <div class="insight-title">💗 信号 3：女频是最大增量蓝海，小红书是自来水主阵地</div>
+    <p><strong>行业证据</strong>：女频仅占 10–20%，但 #甜宠# 累计播放超28亿；小红书女频短剧口碑反哺抖音、红果；《宇宙尽头的书店》、《大小姐》等精品化女频开始跑出来。<br>
+    <strong>对 QQ 的启示</strong>：
+    <ul>
+      <li><strong>女频差异化供给</strong>：QQ 用户年轻化+女性比例，主动在CP合作中扶持女频赛道（叠加内容评级激励）</li>
+      <li><strong>小红书内容分发反哺</strong>：女频漫剧的主阵地是小红书，QQ 可与小红书/公众号联动做"女频漫剧种草→QQ 观看"的流量链路</li>
+      <li><strong>脑洞秀 UGC 女频</strong>：邀请好友虚拟形象出演甜宠剧情，天然适配女频社交传播</li>
+    </ul></p>
+  </div>
+
+  <div class="insight">
+    <div class="insight-title">🤖 信号 4：AI 工具链已标准化，成本不是壁垒</div>
+    <p><strong>行业证据</strong>：WorkRally、Seedance、腾讯云/商汤/万兴工具已非常成熟，爆款《西游》10人团队20天10万成本就能做出来。<br>
+    <strong>对 QQ 的启示</strong>：QQ 不需要自建生产工具，应该聚焦<strong>分发 × 社交 × 互动</strong>的差异化能力。把脑洞秀升级为"UGC漫剧创作+社交平台"——这是行业其他玩家做不了的事情。</p>
+  </div>
+
+  <div class="insight">
+    <div class="insight-title">⚠️ 信号 5：流量规模是CP合作的硬门槛</div>
+    <p><strong>行业证据</strong>：点众原话"给什么内容，关键看你们能给多少流量"——100w DAU 达不到他们的阈值。<br>
+    <strong>对 QQ 的启示</strong>：<strong>路线B（动态页小规模尝试）对CP吸引力过低</strong>，只能拿到阅文二三线内容，用户体验也难撑起循环。<strong>强烈建议走路线A</strong>（底Tab+公众号+动态页+PC，目标千万级DAU），这是与行业头部玩家对话的最低门槛。</p>
+  </div>
+
+  <div class="insight">
+    <div class="insight-title">📅 信号 6：时间窗口在 2026 Q3-Q4 关闭</div>
+    <p><strong>行业证据</strong>：红果 MAU 3亿、火龙已上线、百度柚漫剧筹备中、小红书/快手/视频号/阿里都在入局。字节主导但未形成绝对垄断。<br>
+    <strong>对 QQ 的启示</strong>：5 月 MVP → 6 月底灰度 → Q3 全量 → Q4 高速增长 的时间表<strong>非常关键</strong>。延迟半年，百度/阿里可能已经圈走一批CP和用户心智。<strong>现在就是最好的入场时机。</strong></p>
+  </div>
+
+  <div class="insight">
+    <div class="insight-title">🌐 信号 7：出海是后手但值得预留接口</div>
+    <p><strong>行业证据</strong>：海外 2025 规模 40亿美元，ReelShort 北美单日流水破百万美金。井漫已 1000部/月。<br>
+    <strong>对 QQ 的启示</strong>：国内 MVP 优先，但 B端工具和内容合约设计时预留<strong>海外分发权</strong>的权益条款，后续可通过 WeSing/QQ国际版或新产品接入海外 IP。</p>
+  </div>
+
+  <div class="callout" style="margin-top:24px;">
+    <strong>⭐ 总结给 Neo 的3个决策建议</strong>
+    <ol style="margin-top:8px; padding-left:22px; color:var(--text-dim); font-size:14px;">
+      <li><strong>坚定走路线A</strong>：路线B在当前行业阶段对 CP 吸引力不足，且会错失2026窗口期</li>
+      <li><strong>游戏漫剧是差异化第一王牌</strong>：立即启动与天美/琳琅的三角洲/王者 IP 漫剧联动，这是 QQ 唯一能在字节/百度/阿里面前打出的独占牌</li>
+      <li><strong>女频+UGC脑洞秀 双引擎</strong>：作为社交化差异的长期护城河。小红书联动 + 脑洞秀换脸二创，能把"看漫剧"升级为"玩漫剧"。</li>
+    </ol>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div>© 2026 QQMando · 漫剧行业动态监控 · Neo's workspace</div>
+  <div>数据来源：QuestMobile · 艾媒咨询 · DataEye · 36氪 · 澎湃 · 腾讯新闻 · 小红书 等公开信息</div>
+</footer>
+
+<script>
+  // Last updated label
+  const lastUpdated = new Date().toISOString().slice(0,10);
+  document.title = `QQMando · 漫剧行业监控 (更新于 ${lastUpdated})`;
+</script>
+
+</body>
+</html>
