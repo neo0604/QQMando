@@ -326,177 +326,202 @@ a:hover { color: var(--vermilion); border-bottom-color: var(--vermilion); }
   white-space: nowrap;
 }
 
-/* ==================== ❶ 平台竞品量级 ==================== */
-.platforms-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 0;
-  border-top: 1px solid var(--hairline);
-}
-.platform-card {
-  padding: 24px 20px;
-  border-bottom: 1px solid var(--hairline);
-  border-right: 1px solid var(--hairline);
-  position: relative;
-}
-.platform-card:nth-child(3n) { border-right: none; }
-@media (max-width: 900px) {
-  .platform-card { border-right: none !important; }
-}
-.platform-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 12px;
-  gap: 8px;
-}
-.platform-name {
-  font-family: var(--font-cn);
-  font-weight: 700;
-  font-size: 20px;
-  letter-spacing: 0.01em;
-}
-.platform-tier {
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  color: var(--paper);
-  background: var(--ink);
-  padding: 2px 8px;
-}
-.platform-tier.tier-S { background: var(--vermilion); }
-.platform-tier.tier-A { background: var(--ink); }
-.platform-tier.tier-B { background: var(--ink-mute); }
-.platform-owner {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 12px;
-  color: var(--ink-mute);
-  margin-bottom: 14px;
-}
-.platform-mau {
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 36px;
-  color: var(--ink);
-  line-height: 1;
-  letter-spacing: -0.02em;
-  margin-bottom: 4px;
-}
-.platform-mau-note {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 12px;
-  color: var(--ink-mute);
-  margin-bottom: 14px;
-}
-.platform-highlight {
+/* ==================== 通用数据表 (table compact) ==================== */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
   font-family: var(--font-cn);
   font-size: 13.5px;
-  line-height: 1.65;
-  color: var(--ink-soft);
-  padding-top: 12px;
-  border-top: 1px solid var(--hairline);
-  margin-bottom: 10px;
+  border-top: 2px solid var(--rule);
+  border-bottom: 2px solid var(--rule);
 }
-.platform-tag {
+.data-table thead tr { border-bottom: 1px solid var(--rule); }
+.data-table th {
+  text-align: left;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding: 12px 12px;
+  background: var(--paper-2);
+  white-space: nowrap;
+}
+.data-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--hairline);
+  vertical-align: middle;
+  line-height: 1.55;
+}
+.data-table tbody tr:last-child td { border-bottom: none; }
+.data-table tbody tr:hover { background: var(--vermilion-wash); }
+
+/* ==================== ❶ 平台竞品表 ==================== */
+.platform-row-name {
+  font-family: var(--font-cn);
+  font-weight: 700;
+  font-size: 15px;
+  white-space: nowrap;
+}
+.platform-row-owner {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--ink-mute);
+  margin-top: 2px;
+}
+.platform-row-metric {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 20px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  line-height: 1.1;
+}
+.platform-row-metric-unit {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 11px;
+  color: var(--ink-mute);
+  margin-left: 4px;
+}
+.platform-row-metric-note {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--ink-mute);
+  margin-top: 2px;
+  white-space: normal;
+}
+.platform-row-high {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+.platform-row-tag {
   display: inline-block;
   font-family: var(--font-serif);
   font-size: 11px;
-  letter-spacing: 0.06em;
   font-weight: 700;
+  letter-spacing: 0.04em;
   color: var(--vermilion);
   background: var(--vermilion-wash);
   padding: 3px 8px;
+  white-space: nowrap;
 }
-.platform-source {
-  position: absolute;
-  bottom: 8px;
-  right: 12px;
+.platform-row-tier {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--paper);
+  background: var(--ink);
+  padding: 2px 7px;
+  border-radius: 2px;
+}
+.platform-row-tier.tier-S { background: var(--vermilion); }
+.platform-row-tier.tier-A { background: var(--ink); }
+.platform-row-tier.tier-B { background: var(--ink-mute); }
+.platform-row-source {
   font-family: var(--font-serif);
   font-style: italic;
   font-size: 10px;
   color: var(--ink-mute);
-  opacity: 0.7;
+  opacity: 0.75;
+}
+@media (max-width: 900px) {
+  .data-table, .data-table tbody, .data-table tr, .data-table td { display: block; width: 100%; }
+  .data-table thead { display: none; }
+  .data-table tr { border-bottom: 2px solid var(--rule); padding: 14px 0; }
+  .data-table td { border: none; padding: 4px 0; }
+  .data-table td::before {
+    content: attr(data-label) ' · ';
+    display: inline-block;
+    min-width: 78px;
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--vermilion);
+  }
 }
 
-/* ==================== ❷ 本周爆款榜 ==================== */
-.hot-list { display: flex; flex-direction: column; gap: 0; }
-.hot-item {
-  display: grid;
-  grid-template-columns: 60px 1fr auto;
-  gap: 20px;
-  padding: 24px 0;
-  border-bottom: 1px solid var(--hairline);
-  align-items: start;
+/* ==================== ❷ 本周爆款榜（表格+封面） ==================== */
+.hot-cover {
+  width: 64px;
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-cn);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--paper);
+  letter-spacing: 0.06em;
+  text-align: center;
+  line-height: 1.15;
+  padding: 6px;
+  box-shadow: 2px 2px 0 var(--rule);
+  flex-shrink: 0;
 }
-.hot-item:last-child { border-bottom: none; }
-.hot-rank {
+.hot-rank-td {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 56px;
-  line-height: 0.9;
+  font-size: 30px;
   color: var(--vermilion);
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  width: 40px;
+  text-align: center;
 }
-.hot-body { }
-.hot-title {
+.hot-title-block { min-width: 200px; }
+.hot-title-td {
   font-family: var(--font-cn);
   font-weight: 700;
-  font-size: 22px;
-  margin-bottom: 6px;
+  font-size: 16px;
+  line-height: 1.35;
   letter-spacing: 0.01em;
+  margin-bottom: 4px;
 }
-.hot-title a { border-bottom-style: dashed; }
-.hot-meta {
-  font-family: var(--font-serif);
-  font-size: 13px;
-  color: var(--ink-mute);
-  margin-bottom: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 16px;
-}
-.hot-meta span { white-space: nowrap; }
-.hot-meta span::before {
-  content: '·';
-  margin-right: 16px;
-  color: var(--ink-mute);
-}
-.hot-meta span:first-child::before { content: ''; margin: 0; }
-.hot-milestone {
+.hot-title-td a { border-bottom-style: dashed; }
+.hot-synopsis {
   font-family: var(--font-cn);
-  font-size: 14px;
-  line-height: 1.7;
+  font-size: 12.5px;
   color: var(--ink-soft);
-  background: var(--paper-2);
-  padding: 10px 14px;
-  border-left: 2px solid var(--vermilion);
-  margin-top: 4px;
+  line-height: 1.6;
+  margin-top: 6px;
 }
-.hot-plays {
+.hot-cell-sub {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 11px;
+  color: var(--ink-mute);
+  margin-top: 3px;
+  display: block;
+}
+.hot-plays-td {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 24px;
+  font-size: 18px;
   color: var(--ink);
   white-space: nowrap;
-  text-align: right;
   line-height: 1.1;
 }
-.hot-plays .pl {
+.hot-plays-td .pl {
   display: block;
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 11px;
   color: var(--ink-mute);
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
-@media (max-width: 720px) {
-  .hot-item { grid-template-columns: 44px 1fr; }
-  .hot-rank { font-size: 40px; }
-  .hot-plays { grid-column: 1 / -1; text-align: left; margin-top: 4px; }
+@media (max-width: 900px) {
+  .hot-cover { width: 80px; height: 110px; }
 }
 
 /* ==================== ❸ 本周要闻（分类） ==================== */
@@ -617,81 +642,112 @@ a:hover { color: var(--vermilion); border-bottom-color: var(--vermilion); }
   .news-item { grid-template-columns: 1fr; gap: 8px; }
 }
 
-/* ==================== ❹ 政策对比 ==================== */
-.policy-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: var(--font-cn);
-  font-size: 13.5px;
-}
-.policy-table thead tr {
+/* ==================== ❹ 政策对比（升级为紧凑矩阵） ==================== */
+.policy-wrap {
+  overflow-x: auto;
+  border-top: 2px solid var(--rule);
   border-bottom: 2px solid var(--rule);
 }
-.policy-table th {
+.policy-matrix {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+  font-family: var(--font-cn);
+  font-size: 13px;
+}
+.policy-matrix thead tr { border-bottom: 1px solid var(--rule); }
+.policy-matrix th {
   text-align: left;
   font-family: var(--font-serif);
   font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 0.12em;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink);
-  padding: 14px 12px;
-}
-.policy-table td {
-  padding: 16px 12px;
-  border-bottom: 1px solid var(--hairline);
-  vertical-align: top;
-  line-height: 1.6;
-}
-.policy-table tr.is-new {
-  background: var(--vermilion-wash);
-}
-.policy-plat {
-  font-weight: 700;
-  font-size: 15px;
-  color: var(--ink);
+  padding: 12px 12px;
+  background: var(--paper-2);
+  vertical-align: middle;
   white-space: nowrap;
 }
-.policy-new-badge {
+.policy-matrix td {
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--hairline);
+  vertical-align: top;
+  line-height: 1.55;
+}
+.policy-matrix tbody tr:last-child td { border-bottom: none; }
+.policy-matrix tr.is-new { background: var(--vermilion-wash); }
+.policy-matrix tr.is-new td:first-child {
+  border-left: 3px solid var(--vermilion);
+  padding-left: 9px;
+}
+.policy-matrix .p-plat {
+  font-family: var(--font-cn);
+  font-weight: 700;
+  font-size: 14.5px;
+  white-space: nowrap;
+  color: var(--ink);
+}
+.policy-matrix .p-focus {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  max-width: 160px;
+}
+.policy-matrix .p-bonus {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--vermilion);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+.policy-matrix .p-bonus.empty { color: var(--ink-mute); font-family: var(--font-serif); font-style: italic; font-size: 13px; }
+.policy-matrix .p-rev {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  max-width: 200px;
+}
+.policy-matrix .p-sig {
+  font-family: var(--font-cn);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+}
+.policy-matrix .p-sig-note {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 11.5px;
+  color: var(--ink-mute);
+  margin-top: 4px;
+  font-weight: 400;
+}
+.policy-matrix .p-date {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-mute);
+  white-space: nowrap;
+}
+.p-new-badge {
   display: inline-block;
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 10px;
+  font-size: 9.5px;
   letter-spacing: 0.1em;
   background: var(--vermilion);
   color: var(--paper);
   padding: 2px 6px;
   margin-left: 6px;
   vertical-align: middle;
+  border-radius: 2px;
 }
-.policy-date {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 12px;
-  color: var(--ink-mute);
-  white-space: nowrap;
-}
-.policy-note {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 12px;
-  color: var(--ink-mute);
-  margin-top: 4px;
+.p-link {
+  font-size: 11px;
+  margin-left: 4px;
+  border-bottom: none !important;
 }
 @media (max-width: 900px) {
-  .policy-table, .policy-table tbody, .policy-table tr, .policy-table td { display: block; width: 100%; }
-  .policy-table thead { display: none; }
-  .policy-table tr { border-bottom: 2px solid var(--rule); padding: 16px 0; }
-  .policy-table td { border: none; padding: 4px 0; }
-  .policy-table td::before {
-    content: attr(data-label) ' · ';
-    font-family: var(--font-serif);
-    font-weight: 700;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--vermilion);
-  }
+  .policy-wrap { overflow-x: auto; }
 }
 
 /* ==================== ❺ QQ 策略建议 ==================== */
@@ -995,52 +1051,93 @@ function sectionShell(no, titleCn, titleEn, date) {
 
 function renderPlatforms(list, rangeLabel) {
   const sec = sectionShell('01', '平台竞品量级', 'Competitor Dashboard', `DATA · ${rangeLabel}`);
-  const grid = el('div', 'platforms-grid');
+  const tbl = el('table', 'data-table');
+  tbl.innerHTML = `
+    <thead>
+      <tr>
+        <th style="width:42px">梯队</th>
+        <th>平台</th>
+        <th>量级</th>
+        <th>本周动态 / 要点</th>
+        <th style="width:110px">变化</th>
+        <th style="width:120px">来源</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  `;
+  const tbody = tbl.querySelector('tbody');
   list.forEach(p => {
-    const card = el('div', 'platform-card');
-    const metric = p.dau ? `<div class="platform-mau">${p.dau}<small style="font-size:13px;color:var(--ink-mute);font-family:var(--font-serif);font-style:italic;margin-left:4px">DAU</small></div>`
-                         : `<div class="platform-mau">${p.mau || '—'}<small style="font-size:13px;color:var(--ink-mute);font-family:var(--font-serif);font-style:italic;margin-left:4px">MAU</small></div>`;
-    card.innerHTML = `
-      <div class="platform-head">
-        <div class="platform-name">${p.name}</div>
-        <div class="platform-tier tier-${p.tier}">${p.tier}</div>
-      </div>
-      <div class="platform-owner">${p.owner}</div>
-      ${metric}
-      <div class="platform-mau-note">${p.mauNote || ''}</div>
-      <div class="platform-highlight">${p.weekHighlight || ''}</div>
-      <span class="platform-tag">${p.changeTag || ''}</span>
-      <div class="platform-source">source: ${p.source || '—'}</div>
+    const tr = document.createElement('tr');
+    const isDau = !!p.dau;
+    const metricNum = isDau ? p.dau : (p.mau || '—');
+    const metricUnit = isDau ? 'DAU' : 'MAU';
+    tr.innerHTML = `
+      <td data-label="梯队"><span class="platform-row-tier tier-${p.tier}">${p.tier}</span></td>
+      <td data-label="平台">
+        <div class="platform-row-name">${p.name}</div>
+        <div class="platform-row-owner">${p.owner}</div>
+      </td>
+      <td data-label="量级">
+        <div class="platform-row-metric">${metricNum}<span class="platform-row-metric-unit">${metricUnit}</span></div>
+        <div class="platform-row-metric-note">${p.mauNote || ''}</div>
+      </td>
+      <td data-label="本周动态" class="platform-row-high">${p.weekHighlight || '—'}</td>
+      <td data-label="变化"><span class="platform-row-tag">${p.changeTag || '—'}</span></td>
+      <td data-label="来源"><span class="platform-row-source">${p.source || '—'}</span></td>
     `;
-    grid.appendChild(card);
+    tbody.appendChild(tr);
   });
-  sec.appendChild(grid);
+  sec.appendChild(tbl);
   return sec;
 }
 
 function renderHot(list, rangeLabel) {
   const sec = sectionShell('02', '本周爆款榜', 'Hot Content of the Week', rangeLabel);
-  const wrap = el('div', 'hot-list');
+  const tbl = el('table', 'data-table');
+  tbl.innerHTML = `
+    <thead>
+      <tr>
+        <th style="width:40px">#</th>
+        <th style="width:80px">封面</th>
+        <th>标题 / 简介</th>
+        <th style="width:170px">题材 · 平台</th>
+        <th style="width:110px">上线</th>
+        <th style="width:130px">播放 / 热度</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  `;
+  const tbody = tbl.querySelector('tbody');
   list.forEach(h => {
-    const item = el('div', 'hot-item');
+    const tr = document.createElement('tr');
     const titleHtml = h.link
       ? `<a href="${h.link}" target="_blank" rel="noopener">${h.title}</a>`
       : h.title;
-    const meta = [
-      h.genre, h.platform, h.episodes, h.launchDate && `上线 ${h.launchDate}`, h.producer, h.tech
-    ].filter(Boolean).map(x => `<span>${x}</span>`).join('');
-    item.innerHTML = `
-      <div class="hot-rank">${String(h.rank).padStart(2,'0')}</div>
-      <div class="hot-body">
-        <div class="hot-title">${titleHtml}</div>
-        <div class="hot-meta">${meta}</div>
-        ${h.milestone ? `<div class="hot-milestone">${h.milestone}</div>` : ''}
-      </div>
-      <div class="hot-plays"><span class="pl">播放/热度</span>${h.plays || '—'}</div>
+    const coverBg = h.cover || 'linear-gradient(135deg,#6B5F53 0%,#3C332C 100%)';
+    const coverLabel = h.coverLabel || h.title.slice(0, 3);
+    tr.innerHTML = `
+      <td data-label="#" class="hot-rank-td">${String(h.rank).padStart(2,'0')}</td>
+      <td data-label="封面"><div class="hot-cover" style="background:${coverBg}">${coverLabel}</div></td>
+      <td data-label="标题" class="hot-title-block">
+        <div class="hot-title-td">${titleHtml}</div>
+        ${h.synopsis ? `<div class="hot-synopsis">${h.synopsis}</div>` : ''}
+      </td>
+      <td data-label="题材">
+        <div>${h.genre || '—'}</div>
+        <span class="hot-cell-sub">${h.platform || ''}${h.producer ? ' · ' + h.producer : ''}</span>
+      </td>
+      <td data-label="上线">
+        <div>${h.launchDate || '—'}</div>
+        ${h.episodes ? `<span class="hot-cell-sub">${h.episodes}</span>` : ''}
+      </td>
+      <td data-label="播放/热度" class="hot-plays-td">
+        <span class="pl">播放 / 热度</span>
+        ${h.plays || '—'}
+      </td>
     `;
-    wrap.appendChild(item);
+    tbody.appendChild(tr);
   });
-  sec.appendChild(wrap);
+  sec.appendChild(tbl);
   return sec;
 }
 
@@ -1086,16 +1183,17 @@ function renderNews(news, rangeLabel) {
 
 function renderPolicyTable(rows, rangeLabel) {
   const sec = sectionShell('04', '竞品合作政策对比', 'Partner Program Tracker', rangeLabel);
-  const tbl = el('table', 'policy-table');
+  const wrap = el('div', 'policy-wrap');
+  const tbl = el('table', 'policy-matrix');
   tbl.innerHTML = `
     <thead>
       <tr>
-        <th>平台</th>
-        <th>重点方向</th>
-        <th>顶格保底</th>
-        <th>分成激励</th>
+        <th style="width:150px">平台</th>
+        <th style="width:170px">重点方向</th>
+        <th style="width:140px">顶格保底</th>
+        <th>分成 / 激励</th>
         <th>标志性计划</th>
-        <th>最近更新</th>
+        <th style="width:110px">最近更新</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -1103,17 +1201,24 @@ function renderPolicyTable(rows, rangeLabel) {
   const tbody = tbl.querySelector('tbody');
   rows.forEach(r => {
     const tr = el('tr', r.isNew ? 'is-new' : '');
+    const bonusEmpty = !r.topBonus || r.topBonus === '—';
     tr.innerHTML = `
-      <td data-label="平台"><span class="policy-plat">${r.platform}</span>${r.isNew ? '<span class="policy-new-badge">NEW</span>' : ''}</td>
-      <td data-label="重点方向">${r.focus || '—'}</td>
-      <td data-label="顶格保底">${r.topBonus || '—'}</td>
-      <td data-label="分成激励">${r.revenue || '—'}</td>
-      <td data-label="标志性计划">${r.signature || '—'}${r.note ? `<div class="policy-note">${r.note}</div>` : ''}${r.link ? ` <a href="${r.link}" target="_blank" rel="noopener" style="font-size:11px">↗</a>` : ''}</td>
-      <td data-label="最近更新"><span class="policy-date">${r.lastUpdate}</span></td>
+      <td data-label="平台">
+        <div class="p-plat">${r.platform}${r.isNew ? '<span class="p-new-badge">NEW</span>' : ''}</div>
+      </td>
+      <td data-label="重点方向" class="p-focus">${r.focus || '—'}</td>
+      <td data-label="顶格保底"><div class="p-bonus ${bonusEmpty ? 'empty' : ''}">${r.topBonus || '—'}</div></td>
+      <td data-label="分成/激励" class="p-rev">${r.revenue || '—'}</td>
+      <td data-label="标志性计划">
+        <div class="p-sig">${r.signature || '—'}${r.link ? `<a href="${r.link}" target="_blank" rel="noopener" class="p-link">↗</a>` : ''}</div>
+        ${r.note ? `<div class="p-sig-note">${r.note}</div>` : ''}
+      </td>
+      <td data-label="最近更新"><span class="p-date">${r.lastUpdate || '—'}</span></td>
     `;
     tbody.appendChild(tr);
   });
-  sec.appendChild(tbl);
+  wrap.appendChild(tbl);
+  sec.appendChild(wrap);
   return sec;
 }
 
