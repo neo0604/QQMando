@@ -1,0 +1,344 @@
+{
+  "meta": {
+    "id": "2026-W16",
+    "issueNo": "第 16 期",
+    "rangeStart": "2026-04-13",
+    "rangeEnd": "2026-04-19",
+    "rangeLabel": "4月13日 ~ 4月19日",
+    "publishedAt": "2026-04-21",
+    "editor": "老六",
+    "headline": "红果合榜落地，AI漫剧首超真人短剧；各家扶持政策军备竞赛升级",
+    "lead": "这一周是漫剧行业的分水岭。红果4月9日正式\"合榜\"，AI漫剧与真人短剧同台竞争，《菩提临世真人AI版》以近9000万热度登顶；同一时间窗口内，快手\"磁力新剧\"、淘宝\"AI剧百万激励\"、阅文\"火种计划\"、红果5亿专项资金密集发布，主战场从\"铺量\"转向\"抢创作者\"。QQ漫剧若选择入场，窗口正在收窄。"
+  },
+
+  "marketStrip": [
+    {"label": "行业用户规模", "value": "7.18亿", "note": "QuestMobile 2026.02"},
+    {"label": "独立APP月活", "value": "3.35亿", "note": "同比 +74.3%"},
+    {"label": "Q1 AI短剧播放量", "value": "1200亿", "note": "不含沙雕/游戏编辑器漫"},
+    {"label": "日均AI剧上新", "value": "2000部", "note": "红果单平台，真人剧20倍"}
+  ],
+
+  "platforms": [
+    {
+      "name": "红果短剧",
+      "owner": "字节跳动",
+      "tier": "S",
+      "mau": "3.04亿",
+      "mauNote": "2026.02 MAU，两年半从千万级到3亿",
+      "weekHighlight": "4/9 正式合榜：AI漫剧与真人短剧同榜竞争；日均漫剧上新约2000部，占比远超真人剧",
+      "dailyAdd": "约2000部/日",
+      "changeTag": "🔺 合榜落地",
+      "source": "QuestMobile / 36kr"
+    },
+    {
+      "name": "红果漫剧",
+      "owner": "字节跳动",
+      "tier": "S",
+      "mau": "2400万+",
+      "mauNote": "上线约4个月，人均单日使用>1.5小时",
+      "weekHighlight": "50%新增来自红果短剧APP导流；承接字节内部最大漫剧流量池",
+      "changeTag": "🔺 高速增长",
+      "source": "QuestMobile 2026.02"
+    },
+    {
+      "name": "河马剧场",
+      "owner": "北京点众",
+      "tier": "A",
+      "mau": "5158万",
+      "mauNote": "2025.11 数据，同比 +100%",
+      "weekHighlight": "银发用户渗透率接近60%，是银发人群短剧第一入口；本周无重大政策动作",
+      "changeTag": "稳定",
+      "source": "DataEye / 搜狐"
+    },
+    {
+      "name": "火龙漫剧",
+      "owner": "腾讯（腾讯视频系）",
+      "tier": "A",
+      "mau": "—",
+      "dau": "95.9万",
+      "mauNote": "2026.03.31 DAU，即将破百万",
+      "weekHighlight": "腾讯系唯一漫剧独立APP；扶持政策提供\"腾讯视频 + 火龙漫剧\"双平台双收益",
+      "changeTag": "🔺 接近百万DAU",
+      "source": "QuestMobile"
+    },
+    {
+      "name": "抖音剧场",
+      "owner": "字节跳动",
+      "tier": "A",
+      "mau": "百万级×10",
+      "mauNote": "抖音TOP10短剧小程序月活均超百万",
+      "weekHighlight": "分成系数仿真人漫60 / 3D漫50 / 2D漫40 / 解说漫个位数",
+      "changeTag": "分成分层",
+      "source": "抖音集团短剧版权中心"
+    },
+    {
+      "name": "快手短剧",
+      "owner": "快手",
+      "tier": "A",
+      "mau": "—",
+      "mauNote": "整合档期化运营 + 美团/京东电商闭环",
+      "weekHighlight": "4/1 发布\"磁力新剧计划\"：单部投资最高200万 + 1亿流量",
+      "changeTag": "🔺 抢创作者",
+      "source": "快手磁力新剧官方"
+    },
+    {
+      "name": "小程序短剧（微信）",
+      "owner": "微信生态",
+      "tier": "B",
+      "mau": "4.27亿",
+      "mauNote": "2026.02，同比 +59.9%",
+      "weekHighlight": "九溪/悦众/开心/茶树等头部小程序月活5000万级；渗透银发人群",
+      "changeTag": "稳定",
+      "source": "QuestMobile"
+    }
+  ],
+
+  "hotContent": [
+    {
+      "rank": 1,
+      "title": "菩提临世真人AI版",
+      "genre": "玄幻/男频/西游改编",
+      "platform": "红果短剧",
+      "plays": "热度 8923万",
+      "episodes": "60 集",
+      "launchDate": "2026-03-31",
+      "producer": "魔方剧场",
+      "tech": "基于字节 Seedance 2.0 视频生成模型",
+      "milestone": "首部登顶红果总榜的AI漫剧，4/14 收藏超300万/点赞超400万",
+      "link": "https://news.qq.com/rain/a/20260416A07K1W00"
+    },
+    {
+      "rank": 2,
+      "title": "西游，错把玉帝当亲爹",
+      "genre": "喜剧/西游改编",
+      "platform": "红果短剧",
+      "plays": "全网 2.3 亿",
+      "episodes": "60 集",
+      "launchDate": "2026-02-15",
+      "producer": "星火承制",
+      "milestone": "2D漫剧代表作，上线35小时破亿，连续11天蝉联榜首；第二季4月出但热度未及前作",
+      "link": "https://news.qq.com/rain/a/20260408A07OPF00"
+    },
+    {
+      "rank": 3,
+      "title": "AI仿真人剧组（TOP30占10席）",
+      "genre": "仿真人漫剧整体",
+      "platform": "红果漫剧榜",
+      "plays": "头部单剧热度 4200万+",
+      "launchDate": "2026 春节起密集上线",
+      "milestone": "2026.01 百强榜中AI仿真人剧占比从去年7%跃升至38%，总播放量25.48亿",
+      "link": "https://t.cj.sina.com.cn/articles/view/7879922982/1d5ae15260190a4n1g"
+    },
+    {
+      "rank": 4,
+      "title": "纸飞机",
+      "genre": "AI短片",
+      "platform": "全网",
+      "plays": "—",
+      "milestone": "仅用3天完成制作即实现传播爆发，印证AI制作周期优势",
+      "link": "https://news.qq.com/rain/a/20260416A07K1W00"
+    }
+  ],
+
+  "news": {
+    "policy": [
+      {
+        "date": "2026-04-07",
+        "title": "红果+抖音发布《动画微短剧内容创作建议》，漫剧审核大幅收紧",
+        "summary": "两大方向：①强化整剧立意导向审核；②完善内容风险评估机制。配套整治：Q1累计下架违规漫剧1718部，专项核查1.5万部处置670部；4/3《桃花簪》被下架并停权15天。",
+        "qqTakeaway": "QQ漫剧立项前必须把\"立意审核+风险分级\"写进制作SOP，避免上线后被处置。合规本身会成为中小平台劣势，但对腾讯系合规基建是比较优势。",
+        "link": "https://www.36kr.com/p/3768095100519175"
+      },
+      {
+        "date": "2026-04-10",
+        "title": "4月1日新规全面落地：未备案AI漫剧强制下线",
+        "summary": "国家广电总局要求\"先备案、后上线\"，未备案存量动画微短剧全网下线。日均新剧470部的市场迎来大洗牌。",
+        "qqTakeaway": "倒逼QQ漫剧必须走正规备案通道——这对头部/大厂反而有利，小作坊被清退后供给侧集中度会提升。",
+        "link": "https://m.21jingji.com/article/20260410/herald/055ad9a327c3eed4dc4a0aa93f0863f2.html"
+      }
+    ],
+    "platform": [
+      {
+        "date": "2026-04-09",
+        "title": "红果正式\"合榜\"：AI漫剧与真人短剧同台竞争",
+        "summary": "3月下旬灰度→4月5日《菩提临世》登顶→4月8日漫剧临时撤出→4月9日正式永久合榜。4/14总榜TOP10中AI漫剧占3席。",
+        "qqTakeaway": "用户决策维度从\"是否真实\"变为\"是否好看\"——QQ漫剧不用纠结2D/3D/仿真人路径选择，哪个题材爆选哪个。但要警惕：合榜=AI漫剧直接对标真人剧的质量标准。",
+        "link": "https://www.36kr.com/p/3768095100519175"
+      },
+      {
+        "date": "2026-04-17",
+        "title": "红果5亿专项资金扶持真人短剧+Q2分账透明化",
+        "summary": "抖音短剧版权中心投入，重点扶持真人短剧题材创新与现实题材；配套万象计划(单部200万保底)、果燃计划(最高200万投资)、品类激励(+20%分账)。2026 Q2开放分账透明化，主创可实时查看收入。",
+        "qqTakeaway": "分账透明化是腾讯系可以快速跟进的差异化点——QQ\"社交化漫剧\"本就要打利益共同体心智，分账透明化正好呼应。建议MVP阶段就把\"主创可见分账\"做进产品。",
+        "link": "https://www.21jingji.com/article/20260417/herald/25d258d20648673f9ad1df845b82105b.html"
+      },
+      {
+        "date": "2026-04-13",
+        "title": "QuestMobile 2026短剧行业洞察报告发布",
+        "summary": "短剧用户7.18亿、独立APP月活3.35亿(+74.3%)、微信小程序4.27亿(+59.9%)。红果漫剧2400万月活、火龙漫剧95.9万DAU。",
+        "qqTakeaway": "QQ MAU ≈5.5亿，转化1%即550万——大于火龙漫剧当前盘子。关键不是能不能做，是怎么做差异化。",
+        "link": "https://www.thepaper.cn/newsDetail_forward_32923779"
+      }
+    ],
+    "content": [
+      {
+        "date": "2026-04-16",
+        "title": "《菩提临世》破圈：AI漫剧首次登顶短剧总榜",
+        "summary": "4/5热度达8923万，首日收藏181万；女性用户主导的平台生态中吸引大量仿真人漫剧新用户，被视为现象级破圈。",
+        "qqTakeaway": "信号：男频玄幻 + AI仿真人 = 当前最稀缺组合。QQ男频用户池大(游戏圈)，可重点孵化\"男频玄幻/修仙/系统流\"题材，区别于红果真人短剧的女频甜宠基本盘。",
+        "link": "https://news.qq.com/rain/a/20260416A07K1W00"
+      },
+      {
+        "date": "2026-04-08",
+        "title": "《西游错把玉帝当亲爹》第二季热度不及前作",
+        "summary": "首季35小时破亿、全网2.3亿，但续集热度明显下滑，反映\"爆款续作\"的老问题在AI漫剧上同样存在。",
+        "qqTakeaway": "系列化不是自动续命器。QQ做漫剧要警惕\"IP吃老本\"策略，应该把赌注放在\"新IP孵化效率\"——这也是阅文\"火种计划\"瞄准的方向。",
+        "link": "https://news.qq.com/rain/a/20260408A07OPF00"
+      }
+    ],
+    "capital": [
+      {
+        "date": "2026-04-13",
+        "title": "AI漫剧扶持政策军备竞赛：6家平台集中发力",
+        "summary": "淘宝(S+保底50万+7元/千次播放)、快手(单部200万+1亿流量)、阅文(1亿签约1000导演)、百度智能云(全链路赋能)、腾讯(200%分成+双平台)、抖音(仿真人60系数)。4/1前后集中发布。",
+        "qqTakeaway": "QQ的定位不能是\"再给一个钱更多的保底\"，因为追不过字节的弹药量。要打的是\"社交分发 + 游戏联动 + UGC共创\"——别人给不出的组合拳。",
+        "link": "https://news.qq.com/rain/a/20260413A06U4100"
+      }
+    ]
+  },
+
+  "policyCompare": [
+    {
+      "platform": "红果 / 抖音集团",
+      "focus": "真人+漫剧双线；倾向精品化",
+      "topBonus": "单部200万保底",
+      "revenue": "仿真人漫剧分成系数最高60",
+      "signature": "果燃计划(最高100%投资)、万象计划、5亿专项资金",
+      "lastUpdate": "2026-04-17",
+      "isNew": true,
+      "note": "本周新推5亿专项资金+Q2分账透明化",
+      "link": "https://www.21jingji.com/article/20260417/herald/25d258d20648673f9ad1df845b82105b.html"
+    },
+    {
+      "platform": "快手",
+      "focus": "AI漫剧 + 承制合作",
+      "topBonus": "单部最高200万现金投资",
+      "revenue": "按S/A级分档 + 分成 + 1亿流量",
+      "signature": "磁力新剧计划(制片+承制 / 按比例共创)",
+      "lastUpdate": "2026-04-01",
+      "isNew": true,
+      "note": "本周新发布，知识产权归属分两种模式",
+      "link": "https://news.qq.com/rain/a/20260413A06U4100"
+    },
+    {
+      "platform": "淘宝短剧",
+      "focus": "AI漫剧全品类",
+      "topBonus": "S+级50万保底",
+      "revenue": "最高7元/千次有效播放(PV>5000万)",
+      "signature": "AI剧百万激励计划",
+      "lastUpdate": "2026-04-01",
+      "isNew": true,
+      "note": "本周新发布；可保底+分成叠加",
+      "link": "https://news.qq.com/rain/a/20260413A06U4100"
+    },
+    {
+      "platform": "阅文集团",
+      "focus": "个人AI创作者签约孵化",
+      "topBonus": "1亿+总盘子",
+      "revenue": "签约1000导演+培训体系",
+      "signature": "火种计划",
+      "lastUpdate": "2026-03-28",
+      "isNew": false,
+      "note": "面向20人以下工作室 + 个人OPC",
+      "link": "https://news.qq.com/rain/a/20260413A06U4100"
+    },
+    {
+      "platform": "腾讯视频 / 火龙漫剧",
+      "focus": "独家内容 + 双平台分发",
+      "topBonus": "厂牌激励最高500万",
+      "revenue": "独家内容分成最高200%",
+      "signature": "双平台双收益，2025已发放3140万",
+      "lastUpdate": "2026-02",
+      "isNew": false,
+      "note": "面向个人创作者开放入驻",
+      "link": "https://news.qq.com/rain/a/20260413A06U4100"
+    },
+    {
+      "platform": "爱奇艺漫剧",
+      "focus": "横屏漫剧 + 分账升级",
+      "topBonus": "—",
+      "revenue": "2026年分账体系升级(具体未披露)",
+      "signature": "漫剧频道独立运营",
+      "lastUpdate": "2026-Q1",
+      "isNew": false,
+      "note": "在线视频平台代表，偏横屏",
+      "link": "https://www.iqiyi.com/comicdrama"
+    },
+    {
+      "platform": "芒果TV",
+      "focus": "IP改编",
+      "topBonus": "—",
+      "revenue": "最高50%预分账款",
+      "signature": "千部IP计划",
+      "lastUpdate": "2026-Q1",
+      "isNew": false,
+      "note": "IP储备优势",
+      "link": "https://www.21jingji.com/article/20260417/herald/25d258d20648673f9ad1df845b82105b.html"
+    },
+    {
+      "platform": "咪咕",
+      "focus": "全版权IP开放",
+      "topBonus": "2亿创作扶持金",
+      "revenue": "—",
+      "signature": "开放超2万部IP",
+      "lastUpdate": "2026-Q1",
+      "isNew": false,
+      "note": "运营商系，IP池大",
+      "link": "https://www.21jingji.com/article/20260417/herald/25d258d20648673f9ad1df845b82105b.html"
+    }
+  ],
+
+  "qqStrategy": {
+    "coreJudgment": "漫剧已进入\"精品化 + 抢创作者\"阶段，单纯铺量和提高分成已不是差异化抓手。QQ的胜负手在\"社交分发 × 游戏生态 × UGC共创\"三件套——这是字节/快手/阅文都给不出的组合。",
+    "windows": [
+      "窗口期：从现在到Q3末，大厂扶持政策铺完、头部创作者未完全站队前的6个月黄金期",
+      "风险：字节弹药量远超腾讯——QQ不能在单一变量（钱）上跟红果正面竞争"
+    ],
+    "actions": [
+      {
+        "priority": "P0",
+        "action": "锁定男频玄幻/修仙赛道",
+        "rationale": "《菩提临世》证明男频AI漫剧是当前最稀缺组合；QQ游戏圈男性用户池大，天然贴合"
+      },
+      {
+        "priority": "P0",
+        "action": "分账透明化做进MVP",
+        "rationale": "红果Q2才上线，QQ可同步甚至更早；是对创作者最直接的信任感建立"
+      },
+      {
+        "priority": "P1",
+        "action": "游戏联动漫剧孵化",
+        "rationale": "联合王者/和平精英IP做漫剧，形成\"游戏→漫剧→游戏\"闭环，这是字节快手都做不到的"
+      },
+      {
+        "priority": "P1",
+        "action": "UGC脑洞秀 + 社交化",
+        "rationale": "QQ年轻用户+社交关系链是微信不具备的；漫剧评论区、分享链、群聊追剧是可能的差异化"
+      },
+      {
+        "priority": "P2",
+        "action": "合规能力做成品牌资产",
+        "rationale": "广电新规下，合规基建=品牌溢价。腾讯系已有合规优势，把它做成创作者招募时的核心卖点"
+      }
+    ]
+  },
+
+  "sources": [
+    {"name": "QuestMobile 2026短剧行业洞察报告", "url": "https://www.thepaper.cn/newsDetail_forward_32923779", "date": "2026-04-13"},
+    {"name": "AI漫剧扶持政策一览 - 腾讯新闻", "url": "https://news.qq.com/rain/a/20260413A06U4100", "date": "2026-04-13"},
+    {"name": "红果总榜合并-36kr", "url": "https://www.36kr.com/p/3768095100519175", "date": "2026-04-16"},
+    {"name": "AI剧首超真人-南方都市报", "url": "https://news.qq.com/rain/a/20260416A07K1W00", "date": "2026-04-16"},
+    {"name": "红果5亿专项资金-21财经", "url": "https://www.21jingji.com/article/20260417/herald/25d258d20648673f9ad1df845b82105b.html", "date": "2026-04-17"},
+    {"name": "4月1日AI漫剧新规-21财经", "url": "https://m.21jingji.com/article/20260410/herald/055ad9a327c3eed4dc4a0aa93f0863f2.html", "date": "2026-04-10"}
+  ]
+}
