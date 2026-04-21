@@ -550,6 +550,37 @@ a:hover { color: var(--vermilion); border-bottom-color: var(--vermilion); }
   margin-bottom: 4px;
 }
 .hot-title-td a { border-bottom-style: dashed; }
+.hot-title-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.hot-play-icon {
+  display: inline-block;
+  font-size: 10px;
+  color: var(--vermilion);
+  transform: translateY(-1px);
+  letter-spacing: 0;
+  font-family: var(--font-display);
+}
+.hot-jump-hint {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 11px;
+  color: var(--ink-mute);
+  letter-spacing: 0.03em;
+}
+.hot-alt-link {
+  font-style: normal;
+  color: var(--vermilion);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--vermilion);
+  padding-bottom: 1px;
+}
+.hot-alt-link:hover { opacity: 0.75; }
 .hot-synopsis {
   font-family: var(--font-cn);
   font-size: 12.5px;
@@ -1190,9 +1221,17 @@ function renderHot(list, rangeLabel, meta) {
   const tbody = tbl.querySelector('tbody');
   list.forEach(h => {
     const tr = document.createElement('tr');
+    // 推断主入口标签：link 默认跳抖音搜索
+    const mainLinkLabel = h.link && /douyin\.com/.test(h.link) ? '抖音' :
+                          h.link && /hongguo/.test(h.link) ? '红果' :
+                          h.link && /kuaishou/.test(h.link) ? '快手' : '外链';
     const titleHtml = h.link
-      ? `<a href="${h.link}" target="_blank" rel="noopener">${h.title}</a>`
+      ? `<a href="${h.link}" target="_blank" rel="noopener" class="hot-title-link" title="去 ${mainLinkLabel} 搜索该剧"><span class="hot-play-icon">▶</span>${h.title}</a>`
       : h.title;
+    // 副入口（例如红果兜底）
+    const altLinkHtml = h.linkAlt
+      ? `<a href="${h.linkAlt}" target="_blank" rel="noopener" class="hot-alt-link" title="去 ${h.linkAltLabel || '另一平台'} 看">${h.linkAltLabel || '备选'} ↗</a>`
+      : '';
     const coverBg = h.cover || 'linear-gradient(135deg,#6B5F53 0%,#3C332C 100%)';
     const coverLabel = h.coverLabel || h.title.slice(0, 3);
     // 向后兼容：老数据字段 plays 仍可用
@@ -1202,7 +1241,10 @@ function renderHot(list, rangeLabel, meta) {
       <td data-label="#" class="hot-rank-td">${String(h.rank).padStart(2,'0')}</td>
       <td data-label="封面"><div class="hot-cover" style="background:${coverBg}">${coverLabel}</div></td>
       <td data-label="标题" class="hot-title-block">
-        <div class="hot-title-td">${titleHtml}</div>
+        <div class="hot-title-td">
+          ${titleHtml}
+          <span class="hot-jump-hint">→ ${mainLinkLabel}搜索${altLinkHtml ? ' ｜ ' + altLinkHtml : ''}</span>
+        </div>
         ${h.synopsis ? `<div class="hot-synopsis">${h.synopsis}</div>` : ''}
       </td>
       <td data-label="题材">
