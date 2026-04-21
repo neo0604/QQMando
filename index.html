@@ -451,6 +451,68 @@ a:hover { color: var(--vermilion); border-bottom-color: var(--vermilion); }
 }
 
 /* ==================== ❷ 本周爆款榜（表格+封面） ==================== */
+.method-box {
+  border: 1px solid var(--hairline);
+  border-left: 3px solid var(--vermilion);
+  background: var(--paper-2);
+  padding: 16px 20px 14px;
+  margin-bottom: 20px;
+}
+.method-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--hairline);
+}
+.method-kicker {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--vermilion);
+  text-transform: uppercase;
+}
+.method-window {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+.method-source {
+  font-family: var(--font-cn);
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin-bottom: 8px;
+}
+.method-source strong {
+  font-weight: 700;
+  color: var(--ink);
+}
+.method-list {
+  font-family: var(--font-cn);
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  padding-left: 22px;
+  margin: 4px 0 0;
+}
+.method-list li { margin-bottom: 2px; }
+.method-notice {
+  font-family: var(--font-cn);
+  font-size: 12px;
+  color: var(--ink-mute);
+  line-height: 1.55;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--hairline);
+  font-style: italic;
+}
 .hot-cover {
   width: 64px;
   height: 88px;
@@ -506,10 +568,10 @@ a:hover { color: var(--vermilion); border-bottom-color: var(--vermilion); }
 .hot-plays-td {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 18px;
+  font-size: 17px;
   color: var(--ink);
-  white-space: nowrap;
-  line-height: 1.1;
+  line-height: 1.2;
+  white-space: normal;
 }
 .hot-plays-td .pl {
   display: block;
@@ -518,7 +580,9 @@ a:hover { color: var(--vermilion); border-bottom-color: var(--vermilion); }
   font-weight: 400;
   font-size: 11px;
   color: var(--ink-mute);
-  margin-bottom: 3px;
+  margin-top: 5px;
+  line-height: 1.45;
+  white-space: normal;
 }
 @media (max-width: 900px) {
   .hot-cover { width: 80px; height: 110px; }
@@ -1091,18 +1155,34 @@ function renderPlatforms(list, rangeLabel) {
   return sec;
 }
 
-function renderHot(list, rangeLabel) {
-  const sec = sectionShell('02', '本周爆款榜', 'Hot Content of the Week', rangeLabel);
+function renderHot(list, rangeLabel, meta) {
+  const sec = sectionShell('02', '本周热播 TOP 10', 'Hot Content of the Week', rangeLabel);
+
+  // 方法论卡片（排序逻辑公示）
+  if (meta) {
+    const methodBox = el('div', 'method-box');
+    const steps = (meta.methodology || []).map(m => `<li>${m}</li>`).join('');
+    methodBox.innerHTML = `
+      <div class="method-head">
+        <span class="method-kicker">METHODOLOGY · 排序逻辑</span>
+        <span class="method-window">${meta.window || ''}</span>
+      </div>
+      <div class="method-source"><strong>数据源：</strong>${meta.source || '—'}</div>
+      <ol class="method-list">${steps}</ol>
+      ${meta.notice ? `<div class="method-notice">⚠ ${meta.notice}</div>` : ''}
+    `;
+    sec.appendChild(methodBox);
+  }
+
   const tbl = el('table', 'data-table');
   tbl.innerHTML = `
     <thead>
       <tr>
         <th style="width:40px">#</th>
-        <th style="width:80px">封面</th>
+        <th style="width:78px">封面</th>
         <th>标题 / 简介</th>
-        <th style="width:170px">题材 · 平台</th>
-        <th style="width:110px">上线</th>
-        <th style="width:130px">播放 / 热度</th>
+        <th style="width:180px">题材 · 平台</th>
+        <th style="width:150px">本周峰值</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -1115,6 +1195,9 @@ function renderHot(list, rangeLabel) {
       : h.title;
     const coverBg = h.cover || 'linear-gradient(135deg,#6B5F53 0%,#3C332C 100%)';
     const coverLabel = h.coverLabel || h.title.slice(0, 3);
+    // 向后兼容：老数据字段 plays 仍可用
+    const peakMetric = h.peakMetric || h.plays || '—';
+    const peakNote = h.peakNote || '';
     tr.innerHTML = `
       <td data-label="#" class="hot-rank-td">${String(h.rank).padStart(2,'0')}</td>
       <td data-label="封面"><div class="hot-cover" style="background:${coverBg}">${coverLabel}</div></td>
@@ -1124,15 +1207,11 @@ function renderHot(list, rangeLabel) {
       </td>
       <td data-label="题材">
         <div>${h.genre || '—'}</div>
-        <span class="hot-cell-sub">${h.platform || ''}${h.producer ? ' · ' + h.producer : ''}</span>
+        <span class="hot-cell-sub">${h.platform || ''}${h.producer && h.producer !== '—' ? ' · ' + h.producer : ''}${h.launchDate ? ' · 上线 ' + h.launchDate : ''}</span>
       </td>
-      <td data-label="上线">
-        <div>${h.launchDate || '—'}</div>
-        ${h.episodes ? `<span class="hot-cell-sub">${h.episodes}</span>` : ''}
-      </td>
-      <td data-label="播放/热度" class="hot-plays-td">
-        <span class="pl">播放 / 热度</span>
-        ${h.plays || '—'}
+      <td data-label="本周峰值" class="hot-plays-td">
+        ${peakMetric}
+        ${peakNote ? `<span class="pl">${peakNote}</span>` : ''}
       </td>
     `;
     tbody.appendChild(tr);
@@ -1272,7 +1351,7 @@ async function renderWeek(id) {
   main.innerHTML = '';
   const rangeLabel = data.meta.rangeLabel || '';
   main.appendChild(renderPlatforms(data.platforms || [], rangeLabel));
-  main.appendChild(renderHot(data.hotContent || [], rangeLabel));
+  main.appendChild(renderHot(data.hotContent || [], rangeLabel, data.hotContentMeta));
   main.appendChild(renderNews(data.news || {}, rangeLabel));
   main.appendChild(renderPolicyTable(data.policyCompare || [], rangeLabel));
   if (data.qqStrategy) main.appendChild(renderQQ(data.qqStrategy, rangeLabel));
