@@ -3,416 +3,1007 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QQMando · 漫剧行业动态监控</title>
+<title>QQMando · 漫剧行业观察 週報</title>
 <meta name="description" content="持续追踪漫剧行业动态 × QQ漫剧业务策略参考">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎬%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23F6F1E8' width='100' height='100'/%3E%3Ctext y='.9em' font-size='80' fill='%23C8322B' font-family='serif' font-weight='900'%3EQ%3C/text%3E%3C/svg%3E">
+
+<!-- Fonts: Editorial serif + 中文思源宋体/楷体 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource/dist/cn-fontsource-noto-serif-sc-400-normal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource/dist/cn-fontsource-noto-serif-sc-700-normal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cn-fontsource/dist/cn-fontsource-noto-serif-sc-900-normal.css">
+
 <style>
-  :root{
-    --bg:#0f1115; --bg-card:#181b22; --bg-hover:#1f232c;
-    --border:#2a2f3a; --border-strong:#3a4050;
-    --text:#e8eaee; --text-dim:#9aa0ac; --text-muted:#6b7280;
-    --brand:#ff6b3d; --brand-dim:#7a3420;
-    --accent:#3d7eff; --accent-dim:#1e3a66;
-    --green:#3ecf8e; --red:#ef4444; --yellow:#f59e0b;
-    --radius:10px; --radius-sm:6px;
-    --font: -apple-system, BlinkMacSystemFont, "SF Pro SC", "PingFang SC", "Helvetica Neue", sans-serif;
-  }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
-  body{
-    background:var(--bg); color:var(--text); font-family:var(--font);
-    line-height:1.65; font-size:15px;
-    min-height:100vh;
-  }
-  a{color:var(--accent); text-decoration:none;}
-  a:hover{text-decoration:underline;}
+/* =========================================================
+   QQMando · Editorial Magazine Theme
+   Palette: 奶白纸张底 + 炭墨 + 朱砂红 (信号色)
+   ========================================================= */
+:root{
+  --paper:      #F6F1E8;        /* 羊皮纸白 */
+  --paper-2:    #EFE8DB;        /* 次级纸张 */
+  --paper-3:    #E7DFCE;        /* 装饰面 */
+  --ink:        #1A1814;        /* 炭墨主文字 */
+  --ink-soft:   #3d3a33;        /* 次级文字 */
+  --ink-dim:    #6b665c;        /* 淡墨 */
+  --rule:       #1A1814;        /* 分隔线——重线用纯黑 */
+  --rule-soft:  #c8bfac;        /* 细分隔线 */
+  --red:        #C8322B;        /* 朱砂红——唯一强调色 */
+  --red-deep:   #8a1f19;
+  --red-tint:   #fadcd6;
+  --gold:       #8a6d1e;        /* 配合信号色，仅限少量印章/装饰 */
 
-  /* Header */
-  .header{
-    position:sticky; top:0; z-index:100;
-    background:rgba(15,17,21,0.85); backdrop-filter:blur(12px);
-    border-bottom:1px solid var(--border);
-    padding:14px 24px;
-  }
-  .header-inner{max-width:1280px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;}
-  .logo{font-size:18px; font-weight:700; letter-spacing:-0.3px;}
-  .logo span{color:var(--brand);}
-  .meta{font-size:13px; color:var(--text-dim);}
-  .nav{display:flex; gap:4px; flex-wrap:wrap;}
-  .nav a{
-    color:var(--text-dim); font-size:13px; padding:6px 10px;
-    border-radius:var(--radius-sm); text-decoration:none;
-  }
-  .nav a:hover{background:var(--bg-hover); color:var(--text);}
+  --serif-en:   'Playfair Display', 'Source Serif 4', Georgia, serif;
+  --serif-cn:   'Source Serif 4', 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  --mono:       'JetBrains Mono', 'SF Mono', Menlo, monospace;
+}
 
-  /* Hero */
-  .hero{
-    max-width:1280px; margin:0 auto; padding:40px 24px 24px;
-  }
-  .hero h1{
-    font-size:34px; font-weight:800; letter-spacing:-0.8px; line-height:1.2;
-    margin-bottom:12px;
-  }
-  .hero h1 em{font-style:normal; color:var(--brand);}
-  .hero p{color:var(--text-dim); font-size:15px; max-width:780px;}
-  .tagline{
-    display:inline-flex; align-items:center; gap:6px;
-    padding:4px 10px; border-radius:999px;
-    background:var(--brand-dim); color:var(--brand);
-    font-size:12px; font-weight:500; margin-bottom:16px;
-  }
-  .tagline::before{content:'●'; font-size:8px;}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--serif-cn);
+  font-size:16px;
+  line-height:1.75;
+  font-feature-settings:'palt';
+  /* 纸纹噪点 */
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(200,50,43,0.025) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(138,109,30,0.025) 0%, transparent 40%);
+  background-attachment:fixed;
+  position:relative;
+}
+/* 细颗粒纹理叠层（SVG 噪点） */
+body::before{
+  content:'';
+  position:fixed; inset:0;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.1  0 0 0 0 0.1  0 0 0 0 0.08  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  pointer-events:none;
+  opacity:0.5;
+  z-index:1;
+  mix-blend-mode:multiply;
+}
 
-  /* KPI */
-  .kpi-grid{
-    max-width:1280px; margin:0 auto; padding:0 24px 32px;
-    display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px;
-  }
-  .kpi{
-    background:var(--bg-card); border:1px solid var(--border);
-    border-radius:var(--radius); padding:16px 18px;
-  }
-  .kpi-label{font-size:12px; color:var(--text-dim); margin-bottom:6px; font-weight:500;}
-  .kpi-value{font-size:24px; font-weight:700; letter-spacing:-0.5px; line-height:1.2;}
-  .kpi-value small{font-size:13px; color:var(--text-dim); font-weight:500;}
-  .kpi-trend{font-size:12px; color:var(--green); margin-top:4px;}
-  .kpi-trend.down{color:var(--red);}
+a{color:var(--ink); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:3px; text-decoration-color:var(--red);}
+a:hover{color:var(--red);}
 
-  /* Main layout */
-  .container{max-width:1280px; margin:0 auto; padding:0 24px 60px;}
-  section{margin-bottom:44px; scroll-margin-top:80px;}
-  .section-head{
-    display:flex; align-items:baseline; justify-content:space-between;
-    margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid var(--border);
-  }
-  .section-head h2{
-    font-size:22px; font-weight:700; letter-spacing:-0.3px;
-    display:flex; align-items:center; gap:10px;
-  }
-  .section-head h2::before{
-    content:''; width:4px; height:20px; background:var(--brand); border-radius:2px;
-  }
-  .section-head .hint{font-size:13px; color:var(--text-muted);}
+/* =========================================================
+   MASTHEAD · 刊头
+   ========================================================= */
+.masthead{
+  position:relative; z-index:2;
+  max-width:1180px;
+  margin:0 auto;
+  padding:40px 40px 18px;
+  border-bottom:2px solid var(--ink);
+}
+.masthead-top{
+  display:flex; justify-content:space-between; align-items:flex-end;
+  font-size:12px; letter-spacing:0.15em; text-transform:uppercase;
+  color:var(--ink-soft);
+  border-bottom:1px solid var(--rule-soft);
+  padding-bottom:10px;
+  font-family:var(--serif-en);
+}
+.masthead-top .left span{margin-right:16px;}
+.masthead-top .right{font-variant-numeric:tabular-nums;}
 
-  /* Cards grid */
-  .grid{display:grid; gap:14px;}
-  .grid-2{grid-template-columns:repeat(auto-fit, minmax(380px, 1fr));}
-  .grid-3{grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));}
-  .card{
-    background:var(--bg-card); border:1px solid var(--border);
-    border-radius:var(--radius); padding:18px 20px;
-    transition: border-color 0.15s, transform 0.15s;
-  }
-  .card:hover{border-color:var(--border-strong);}
-  .card h3{
-    font-size:16px; font-weight:600; margin-bottom:8px;
-    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
-  }
-  .card p{color:var(--text-dim); font-size:14px;}
-  .card ul{color:var(--text-dim); font-size:14px; padding-left:20px; margin-top:6px;}
-  .card ul li{margin-bottom:4px;}
-  .card .source{
-    display:inline-block; margin-top:10px; font-size:12px;
-    color:var(--text-muted);
-  }
+.masthead-title{
+  font-family:var(--serif-en);
+  font-weight:900;
+  font-size:clamp(58px, 10vw, 128px);
+  line-height:0.95;
+  letter-spacing:-0.04em;
+  margin:20px 0 8px;
+  text-align:center;
+  position:relative;
+}
+.masthead-title .accent{color:var(--red); font-style:italic;}
+.masthead-subtitle{
+  font-family:var(--serif-en);
+  font-style:italic;
+  text-align:center;
+  font-size:clamp(16px, 1.8vw, 22px);
+  color:var(--ink-soft);
+  margin-bottom:14px;
+  letter-spacing:0.02em;
+}
+.masthead-chinese{
+  text-align:center;
+  font-family:var(--serif-cn);
+  font-weight:700;
+  font-size:18px;
+  letter-spacing:0.8em;
+  padding-left:0.8em;
+  color:var(--ink);
+  margin-bottom:18px;
+}
+.masthead-bottom{
+  display:flex; justify-content:space-between; align-items:center;
+  font-family:var(--serif-en);
+  font-size:11px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--ink-soft);
+  border-top:1px solid var(--rule-soft);
+  padding-top:10px;
+}
+.masthead-bottom .dot{
+  display:inline-block; width:6px; height:6px;
+  border-radius:50%; background:var(--red);
+  margin:0 10px; vertical-align:middle;
+}
 
-  /* Badges */
-  .badge{
-    display:inline-block; padding:2px 8px; border-radius:4px;
-    font-size:11px; font-weight:600; letter-spacing:0.2px;
-  }
-  .badge-new{background:var(--brand-dim); color:var(--brand);}
-  .badge-hot{background:#401a1a; color:var(--red);}
-  .badge-key{background:var(--accent-dim); color:var(--accent);}
-  .badge-warn{background:#3d2f10; color:var(--yellow);}
-  .badge-ok{background:#0f3a28; color:var(--green);}
+/* =========================================================
+   NAVIGATION 导览
+   ========================================================= */
+.topnav{
+  position:sticky; top:0; z-index:50;
+  background:var(--paper);
+  border-bottom:1px solid var(--ink);
+  padding:10px 40px;
+  backdrop-filter:blur(6px);
+  background:rgba(246,241,232,0.95);
+}
+.topnav-inner{
+  max-width:1180px; margin:0 auto;
+  display:flex; justify-content:space-between; align-items:center;
+  flex-wrap:wrap; gap:10px;
+}
+.topnav-brand{
+  font-family:var(--serif-en);
+  font-weight:900; font-size:14px; letter-spacing:0.05em;
+}
+.topnav-brand .accent{color:var(--red);}
+.topnav ul{
+  list-style:none; display:flex; flex-wrap:wrap; gap:0;
+  font-family:var(--serif-en); font-size:12px; letter-spacing:0.1em; text-transform:uppercase;
+}
+.topnav ul li{padding:0 12px; border-right:1px solid var(--rule-soft);}
+.topnav ul li:last-child{border-right:none; padding-right:0;}
+.topnav ul a{
+  color:var(--ink-soft); text-decoration:none;
+  padding-bottom:2px; border-bottom:1px solid transparent;
+  transition:all 0.2s;
+}
+.topnav ul a:hover{color:var(--red); border-bottom-color:var(--red);}
 
-  /* Tables */
-  .tbl{width:100%; border-collapse:collapse; font-size:13px;}
-  .tbl th, .tbl td{
-    padding:10px 12px; text-align:left; border-bottom:1px solid var(--border);
-  }
-  .tbl th{color:var(--text-dim); font-weight:500; font-size:12px;}
-  .tbl td{color:var(--text);}
-  .tbl td.num{font-family:"SF Mono", Monaco, monospace; font-weight:600;}
-  .tbl tr:hover td{background:var(--bg-hover);}
+/* =========================================================
+   MAIN LAYOUT
+   ========================================================= */
+main{
+  position:relative; z-index:2;
+  max-width:1180px;
+  margin:0 auto;
+  padding:40px;
+}
 
-  /* News list */
-  .news-list{display:flex; flex-direction:column; gap:10px;}
-  .news-item{
-    display:flex; gap:14px; padding:14px 16px;
-    background:var(--bg-card); border:1px solid var(--border);
-    border-radius:var(--radius); transition:border-color 0.15s;
-  }
-  .news-item:hover{border-color:var(--border-strong);}
-  .news-date{
-    font-size:12px; color:var(--text-muted); font-family:"SF Mono", Monaco, monospace;
-    min-width:55px; padding-top:2px;
-  }
-  .news-body{flex:1; min-width:0;}
-  .news-title{font-size:14px; font-weight:500; margin-bottom:4px; line-height:1.45;}
-  .news-title a{color:var(--text);}
-  .news-title a:hover{color:var(--brand); text-decoration:none;}
-  .news-meta{font-size:12px; color:var(--text-muted);}
+/* =========================================================
+   LEAD STORY · 头版大新闻（Hero）
+   ========================================================= */
+.lead{
+  display:grid;
+  grid-template-columns: 2.2fr 1fr;
+  gap:36px;
+  padding:30px 0 48px;
+  border-bottom:3px double var(--ink);
+  margin-bottom:44px;
+  animation: rise .9s ease-out both;
+}
+@keyframes rise{from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);}}
 
-  /* QQ Strategy section */
-  .qq-section{
-    background:linear-gradient(135deg, rgba(61,126,255,0.08), rgba(255,107,61,0.04));
-    border:1px solid var(--border-strong); border-radius:14px;
-    padding:28px 28px 20px;
-  }
-  .qq-section .section-head{border-bottom-color:var(--border-strong);}
-  .callout{
-    background:var(--bg-card); border-left:3px solid var(--brand);
-    padding:12px 16px; border-radius:var(--radius-sm);
-    margin:12px 0;
-  }
-  .callout strong{color:var(--brand);}
+.lead-main .kicker{
+  font-family:var(--serif-en);
+  font-size:12px;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  color:var(--red);
+  margin-bottom:16px;
+  display:flex; align-items:center; gap:10px;
+}
+.lead-main .kicker::before{
+  content:''; width:28px; height:1px; background:var(--red);
+}
+.lead-main h1{
+  font-family:var(--serif-cn);
+  font-weight:900;
+  font-size:clamp(34px, 4.6vw, 58px);
+  line-height:1.08;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+  margin-bottom:18px;
+}
+.lead-main h1 em{font-style:italic; color:var(--red); font-family:var(--serif-en);}
+.lead-main .deck{
+  font-family:var(--serif-cn);
+  font-size:18px;
+  line-height:1.75;
+  color:var(--ink-soft);
+  margin-bottom:20px;
+  padding-left:16px;
+  border-left:3px solid var(--red);
+}
+.lead-main .byline{
+  font-family:var(--serif-en);
+  font-style:italic;
+  font-size:13px;
+  color:var(--ink-dim);
+  letter-spacing:0.02em;
+}
+.lead-main .byline strong{font-style:normal; color:var(--ink); font-weight:700; letter-spacing:0.1em; text-transform:uppercase; font-size:11px;}
 
-  /* Insight */
-  .insight{
-    background:var(--bg-card); border:1px solid var(--border);
-    border-left:3px solid var(--accent); border-radius:var(--radius);
-    padding:16px 20px; margin-bottom:14px;
-  }
-  .insight-title{font-size:15px; font-weight:600; margin-bottom:6px; color:var(--accent);}
-  .insight p{font-size:14px; color:var(--text-dim);}
+/* 头版侧边栏——关键数据 */
+.lead-aside{
+  border-left:1px solid var(--ink);
+  padding-left:28px;
+}
+.lead-aside-label{
+  font-family:var(--serif-en);
+  font-size:10px;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  color:var(--red);
+  padding-bottom:8px;
+  border-bottom:1px solid var(--ink);
+  margin-bottom:18px;
+}
+.lead-stat{
+  padding:12px 0;
+  border-bottom:1px dotted var(--rule-soft);
+}
+.lead-stat:last-child{border-bottom:none;}
+.lead-stat .num{
+  font-family:var(--serif-en);
+  font-weight:900;
+  font-size:32px;
+  line-height:1;
+  color:var(--ink);
+  letter-spacing:-0.02em;
+  font-variant-numeric:tabular-nums;
+}
+.lead-stat .num small{
+  font-size:14px; color:var(--ink-dim); margin-left:4px; font-weight:400;
+}
+.lead-stat .desc{
+  font-size:13px; color:var(--ink-soft); margin-top:2px;
+  font-family:var(--serif-cn);
+}
+.lead-stat .trend{
+  display:inline-block; margin-top:4px;
+  font-family:var(--serif-en); font-size:11px; color:var(--red);
+  letter-spacing:0.1em; text-transform:uppercase;
+}
 
-  /* Footer */
-  .footer{
-    max-width:1280px; margin:0 auto; padding:24px;
-    border-top:1px solid var(--border);
-    color:var(--text-muted); font-size:13px;
-    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
-  }
-  .footer a{color:var(--text-dim);}
+/* =========================================================
+   SECTION · 章节标题
+   ========================================================= */
+.section{
+  margin:50px 0;
+  scroll-margin-top:80px;
+}
+.section-header{
+  display:flex; justify-content:space-between; align-items:flex-end;
+  padding-bottom:14px;
+  margin-bottom:28px;
+  border-bottom:1px solid var(--ink);
+  position:relative;
+}
+.section-header::before{
+  content:''; position:absolute; bottom:-4px; left:0; right:0;
+  border-bottom:1px solid var(--ink);
+}
+.section-title{
+  display:flex; align-items:baseline; gap:16px;
+}
+.section-num{
+  font-family:var(--serif-en);
+  font-style:italic;
+  font-size:22px;
+  color:var(--red);
+  font-weight:400;
+}
+.section-title h2{
+  font-family:var(--serif-cn);
+  font-weight:900;
+  font-size:34px;
+  letter-spacing:-0.01em;
+  color:var(--ink);
+}
+.section-title h2 .en{
+  font-family:var(--serif-en);
+  font-style:italic;
+  font-weight:400;
+  font-size:20px;
+  color:var(--ink-dim);
+  margin-left:12px;
+  letter-spacing:0.02em;
+}
+.section-hint{
+  font-family:var(--serif-en);
+  font-style:italic;
+  font-size:13px;
+  color:var(--ink-dim);
+  letter-spacing:0.05em;
+}
 
-  @media (max-width:640px){
-    .hero h1{font-size:26px;}
-    .grid-2, .grid-3{grid-template-columns:1fr;}
-    .qq-section{padding:20px 16px;}
-  }
+/* =========================================================
+   COLUMNS · 多栏文章
+   ========================================================= */
+.columns-2{display:grid; grid-template-columns:1fr 1fr; gap:40px;}
+.columns-3{display:grid; grid-template-columns:repeat(3, 1fr); gap:32px;}
+
+/* =========================================================
+   NEWS FEED · 新闻列
+   ========================================================= */
+.news-list{display:flex; flex-direction:column;}
+.news-item{
+  display:grid;
+  grid-template-columns: 84px 1fr;
+  gap:22px;
+  padding:18px 0;
+  border-bottom:1px dotted var(--rule-soft);
+  align-items:baseline;
+}
+.news-item:last-child{border-bottom:none;}
+.news-date{
+  font-family:var(--serif-en);
+  font-weight:700;
+  font-size:13px;
+  letter-spacing:0.1em;
+  color:var(--red);
+  font-variant-numeric:tabular-nums;
+  padding-top:2px;
+}
+.news-tag{
+  display:inline-block;
+  padding:1px 6px;
+  font-family:var(--serif-en);
+  font-size:9px;
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  font-weight:700;
+  color:var(--paper);
+  background:var(--ink);
+  margin-right:10px;
+  vertical-align:1px;
+}
+.news-tag.red{background:var(--red);}
+.news-tag.gold{background:var(--gold);}
+.news-title{
+  font-family:var(--serif-cn);
+  font-weight:700;
+  font-size:19px;
+  line-height:1.4;
+  color:var(--ink);
+  margin-bottom:6px;
+}
+.news-title a{
+  color:var(--ink);
+  text-decoration:none;
+  background-image:linear-gradient(var(--red), var(--red));
+  background-size:0 1px;
+  background-position:0 100%;
+  background-repeat:no-repeat;
+  transition:background-size .3s;
+}
+.news-title a:hover{
+  color:var(--red);
+  background-size:100% 1px;
+}
+.news-meta{
+  font-family:var(--serif-cn);
+  font-size:15px;
+  color:var(--ink-soft);
+  line-height:1.7;
+}
+
+/* =========================================================
+   TABLE · 表格（报表样式）
+   ========================================================= */
+.tbl-wrap{
+  border-top:2px solid var(--ink);
+  border-bottom:2px solid var(--ink);
+  padding:0;
+  margin:12px 0;
+  overflow-x:auto;
+}
+.tbl{
+  width:100%;
+  border-collapse:collapse;
+  font-family:var(--serif-cn);
+  font-size:14.5px;
+}
+.tbl thead th{
+  font-family:var(--serif-en);
+  font-weight:700;
+  font-size:11px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--ink);
+  padding:12px 14px;
+  text-align:left;
+  border-bottom:1px solid var(--ink);
+  background:var(--paper-2);
+}
+.tbl tbody td{
+  padding:13px 14px;
+  border-bottom:1px dotted var(--rule-soft);
+  vertical-align:top;
+  color:var(--ink);
+}
+.tbl tbody tr:last-child td{border-bottom:none;}
+.tbl tbody tr:hover{background:var(--paper-2);}
+.tbl .num{
+  font-family:var(--mono);
+  font-variant-numeric:tabular-nums;
+  font-size:13.5px;
+}
+.tbl .qq-row{
+  background:var(--red-tint) !important;
+}
+.tbl .qq-row td{font-weight:600;}
+.tbl .qq-row td:first-child{
+  border-left:4px solid var(--red);
+  padding-left:10px;
+}
+
+/* =========================================================
+   CARD · 文章块
+   ========================================================= */
+.article{
+  padding-right:16px;
+}
+.article-kicker{
+  font-family:var(--serif-en);
+  font-size:10px;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  color:var(--red);
+  margin-bottom:8px;
+}
+.article h3{
+  font-family:var(--serif-cn);
+  font-weight:900;
+  font-size:22px;
+  line-height:1.3;
+  margin-bottom:10px;
+  color:var(--ink);
+}
+.article p{
+  font-size:15px;
+  line-height:1.8;
+  color:var(--ink-soft);
+  margin-bottom:10px;
+}
+.article ul{
+  padding-left:20px;
+  font-size:14.5px;
+  color:var(--ink-soft);
+  line-height:1.8;
+}
+.article ul li{margin-bottom:4px;}
+.article ul li::marker{color:var(--red);}
+.article .source{
+  display:inline-block;
+  font-family:var(--serif-en);
+  font-style:italic;
+  font-size:12px;
+  color:var(--ink-dim);
+  margin-top:8px;
+}
+
+/* =========================================================
+   PULL-QUOTE · 大字引言
+   ========================================================= */
+.pullquote{
+  grid-column:1/-1;
+  margin:36px 0;
+  padding:28px 40px;
+  border-top:3px double var(--ink);
+  border-bottom:3px double var(--ink);
+  text-align:center;
+  font-family:var(--serif-cn);
+  font-weight:700;
+  font-size:clamp(22px, 3vw, 30px);
+  line-height:1.5;
+  color:var(--ink);
+  font-style:italic;
+  position:relative;
+}
+.pullquote::before{
+  content:'“';
+  position:absolute; left:10px; top:-8px;
+  font-family:var(--serif-en);
+  font-size:80px; line-height:1; color:var(--red);
+  font-style:normal;
+}
+.pullquote::after{
+  content:'”';
+  position:absolute; right:10px; bottom:-40px;
+  font-family:var(--serif-en);
+  font-size:80px; line-height:1; color:var(--red);
+  font-style:normal;
+}
+
+/* =========================================================
+   BIG STAT GRID · 数据大字
+   ========================================================= */
+.stat-grid{
+  display:grid;
+  grid-template-columns:repeat(6, 1fr);
+  border:2px solid var(--ink);
+  margin:0 0 10px;
+}
+.stat-cell{
+  padding:22px 16px;
+  border-right:1px solid var(--ink);
+  text-align:center;
+  background:var(--paper);
+}
+.stat-cell:last-child{border-right:none;}
+.stat-cell:nth-child(-n+6):nth-last-child(n+1){}
+.stat-cell .num{
+  font-family:var(--serif-en);
+  font-weight:900;
+  font-size:38px;
+  line-height:1;
+  color:var(--ink);
+  letter-spacing:-0.02em;
+  font-variant-numeric:tabular-nums;
+}
+.stat-cell .num.red{color:var(--red);}
+.stat-cell .num small{
+  font-size:14px; color:var(--ink-dim); margin-left:2px; font-weight:400;
+}
+.stat-cell .label{
+  font-family:var(--serif-cn);
+  font-size:13px;
+  color:var(--ink-soft);
+  margin-top:8px;
+  line-height:1.4;
+}
+.stat-cell .sub{
+  font-family:var(--serif-en);
+  font-style:italic;
+  font-size:11px;
+  color:var(--ink-dim);
+  margin-top:4px;
+}
+
+/* =========================================================
+   QQ STRATEGY · 策略专栏（章节8）
+   ========================================================= */
+.qq-callout{
+  padding:30px 36px;
+  border:2px solid var(--red);
+  background:var(--paper);
+  position:relative;
+  margin-bottom:32px;
+}
+.qq-callout::before{
+  content:'QQ';
+  position:absolute; top:-14px; left:30px;
+  background:var(--paper);
+  padding:0 14px;
+  font-family:var(--serif-en);
+  font-weight:900;
+  font-size:20px;
+  color:var(--red);
+  letter-spacing:0.1em;
+}
+.qq-callout p{
+  font-family:var(--serif-cn);
+  font-size:17px;
+  line-height:1.8;
+  color:var(--ink);
+}
+.qq-callout p strong{color:var(--red);}
+
+.signal{
+  padding:24px 0;
+  border-bottom:1px solid var(--rule-soft);
+  display:grid;
+  grid-template-columns:60px 1fr;
+  gap:24px;
+}
+.signal:last-child{border-bottom:none;}
+.signal-num{
+  font-family:var(--serif-en);
+  font-weight:900;
+  font-style:italic;
+  font-size:58px;
+  line-height:1;
+  color:var(--red);
+  letter-spacing:-0.04em;
+}
+.signal-body h3{
+  font-family:var(--serif-cn);
+  font-weight:900;
+  font-size:22px;
+  line-height:1.35;
+  margin-bottom:10px;
+  color:var(--ink);
+}
+.signal-evidence, .signal-action{
+  font-family:var(--serif-cn);
+  font-size:15px;
+  line-height:1.8;
+  color:var(--ink-soft);
+  margin-bottom:8px;
+}
+.signal-tag{
+  display:inline-block;
+  font-family:var(--serif-en);
+  font-weight:700;
+  font-size:10px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  padding:2px 8px;
+  margin-right:8px;
+  background:var(--ink);
+  color:var(--paper);
+  vertical-align:1px;
+}
+.signal-tag.red{background:var(--red);}
+.signal-action ul{
+  padding-left:20px;
+  margin-top:8px;
+}
+.signal-action ul li::marker{color:var(--red);}
+
+.verdict{
+  margin-top:36px;
+  padding:30px 40px;
+  background:var(--ink);
+  color:var(--paper);
+  position:relative;
+}
+.verdict::before{
+  content:'VERDICT';
+  position:absolute; top:-12px; left:36px;
+  background:var(--red); color:var(--paper);
+  padding:2px 14px;
+  font-family:var(--serif-en);
+  font-weight:900; font-size:12px; letter-spacing:0.3em;
+}
+.verdict h3{
+  font-family:var(--serif-cn);
+  font-weight:900;
+  font-size:24px;
+  margin-bottom:20px;
+  color:var(--paper);
+}
+.verdict ol{
+  padding-left:24px;
+  font-family:var(--serif-cn);
+  font-size:16px;
+  line-height:1.85;
+}
+.verdict ol li{margin-bottom:12px;}
+.verdict ol li::marker{color:var(--red); font-weight:900;}
+.verdict strong{color:#ffdf6e;}
+
+/* =========================================================
+   HITS GRID · 爆款作品卡片
+   ========================================================= */
+.hit{
+  padding:22px 24px;
+  border:1px solid var(--ink);
+  background:var(--paper);
+  position:relative;
+  transition:transform .3s, box-shadow .3s;
+}
+.hit:hover{
+  transform:translateY(-3px);
+  box-shadow:6px 6px 0 var(--red);
+}
+.hit-rank{
+  position:absolute; top:-1px; left:-1px;
+  background:var(--red); color:var(--paper);
+  font-family:var(--serif-en);
+  font-weight:900; font-size:12px; letter-spacing:0.1em;
+  padding:3px 10px;
+}
+.hit h3{
+  font-family:var(--serif-cn);
+  font-weight:900;
+  font-size:19px;
+  line-height:1.35;
+  margin:18px 0 6px;
+  color:var(--ink);
+}
+.hit .sub{
+  font-family:var(--serif-en);
+  font-style:italic;
+  font-size:13px;
+  color:var(--red);
+  margin-bottom:10px;
+}
+.hit ul{
+  padding-left:18px; font-size:14px; color:var(--ink-soft); line-height:1.75;
+}
+.hit ul li::marker{color:var(--red);}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.colophon{
+  margin-top:60px;
+  padding:30px 0 50px;
+  border-top:3px double var(--ink);
+  font-family:var(--serif-en);
+  font-size:12px;
+  letter-spacing:0.1em;
+  color:var(--ink-dim);
+  text-align:center;
+}
+.colophon .line{margin-bottom:6px;}
+.colophon .line strong{color:var(--ink); letter-spacing:0.2em; text-transform:uppercase;}
+.colophon .rule{
+  width:60px; height:2px; background:var(--red);
+  margin:16px auto;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 900px){
+  .masthead{padding:24px 20px 14px;}
+  main{padding:24px 20px;}
+  .lead{grid-template-columns:1fr; gap:24px;}
+  .lead-aside{border-left:none; border-top:1px solid var(--ink); padding-left:0; padding-top:20px;}
+  .columns-2, .columns-3{grid-template-columns:1fr; gap:24px;}
+  .stat-grid{grid-template-columns:repeat(2, 1fr);}
+  .stat-cell{border-right:1px solid var(--ink); border-bottom:1px solid var(--ink);}
+  .stat-cell:nth-child(2n){border-right:none;}
+  .stat-cell:nth-last-child(-n+2){border-bottom:none;}
+  .section-title h2{font-size:26px;}
+  .news-item{grid-template-columns:1fr; gap:4px;}
+  .news-date{font-size:12px;}
+  .topnav{padding:8px 16px;}
+  .topnav ul{font-size:10px;}
+  .topnav ul li{padding:0 8px;}
+  .qq-callout{padding:24px 20px;}
+  .signal{grid-template-columns:1fr; gap:8px;}
+  .signal-num{font-size:38px;}
+  .verdict{padding:22px 24px;}
+}
 </style>
 </head>
 <body>
 
-<header class="header">
-  <div class="header-inner">
-    <div class="logo">QQ<span>Mando</span> · 漫剧行业动态监控</div>
-    <nav class="nav">
-      <a href="#market">市场大盘</a>
-      <a href="#news">行业动态</a>
-      <a href="#platform">平台格局</a>
-      <a href="#content">内容供给</a>
-      <a href="#hits">爆款案例</a>
-      <a href="#tech">技术·AI</a>
-      <a href="#regulation">政策监管</a>
-      <a href="#overseas">出海</a>
-      <a href="#qq">QQ 策略参考</a>
-    </nav>
+<!-- ================== MASTHEAD ================== -->
+<header class="masthead">
+  <div class="masthead-top">
+    <div class="left">
+      <span>第 01 期</span>
+      <span>VOL. I · No. 001</span>
+      <span>内部参阅</span>
+    </div>
+    <div class="right" id="pub-date">2026 · APRIL · 21</div>
+  </div>
+
+  <h1 class="masthead-title">QQ<span class="accent">Mando</span></h1>
+  <div class="masthead-subtitle">The Weekly Observer of the Manga-Drama Industry</div>
+  <div class="masthead-chinese">漫 剧 行 业 观 察</div>
+
+  <div class="masthead-bottom">
+    <div>Est. 2026 · by Neo</div>
+    <div><span class="dot"></span>RESEARCH · INSIGHT · STRATEGY<span class="dot"></span></div>
+    <div>Tencent QQ · Internal</div>
   </div>
 </header>
 
-<section class="hero">
-  <span class="tagline">持续更新 · 全网+小红书 情报聚合</span>
-  <h1>漫剧行业动态 <em>×</em> QQ漫剧业务策略参考</h1>
-  <p>2026年最快增长的内容赛道，用户规模从1.2亿跃升至2.8亿。这里沉淀一线行业情报，对照 QQ 漫剧"社交化"差异路线，输出可落地的策略建议。</p>
+<!-- ================== NAV ================== -->
+<nav class="topnav">
+  <div class="topnav-inner">
+    <div class="topnav-brand">QQ<span class="accent">MANDO</span> · TOC</div>
+    <ul>
+      <li><a href="#lead">Front Page</a></li>
+      <li><a href="#news">News</a></li>
+      <li><a href="#platforms">Platforms</a></li>
+      <li><a href="#cp">Studios</a></li>
+      <li><a href="#hits">Hits</a></li>
+      <li><a href="#tech">Tech</a></li>
+      <li><a href="#rules">Policy</a></li>
+      <li><a href="#overseas">Global</a></li>
+      <li><a href="#qq">QQ Strategy</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+<!-- ================== LEAD STORY ================== -->
+<article class="lead" id="lead">
+  <div class="lead-main">
+    <div class="kicker">市场大盘 · Market Overview</div>
+    <h1>七亿用户、半壁江山、<em>2026</em><br>漫剧的"大航海时代"已然启航</h1>
+    <div class="deck">
+      中国短剧用户规模突破 <strong>7.18 亿</strong>，独立 APP 月活 3.35 亿、小程序 4.27 亿，同比均超 50%。在这其中，AI 漫剧以爆款率 4% 的严苛门槛，完成了从"草莽流量"到"精品分账"的关键一跃——窗口，只剩 2026 年。
+    </div>
+    <div class="byline">
+      <strong>CHIEF EDITOR</strong> — Neo &nbsp;|&nbsp;
+      <em>Sources: QuestMobile · 艾媒咨询 · DataEye · 36氪 · 澎湃 · 腾讯新闻</em>
+    </div>
+  </div>
+
+  <aside class="lead-aside">
+    <div class="lead-aside-label">At a Glance · 核心指标</div>
+    <div class="lead-stat">
+      <div class="num">7.18<small>亿</small></div>
+      <div class="desc">短剧用户规模</div>
+      <div class="trend">YoY +50%</div>
+    </div>
+    <div class="lead-stat">
+      <div class="num">5<small>亿/月</small></div>
+      <div class="desc">红果月度分账金额</div>
+      <div class="trend">Leading the Tide</div>
+    </div>
+    <div class="lead-stat">
+      <div class="num">10<small>万</small></div>
+      <div class="desc">单部漫剧爆款制作成本</div>
+      <div class="trend">1000× cheaper</div>
+    </div>
+    <div class="lead-stat">
+      <div class="num">4<small>%</small></div>
+      <div class="desc">AI漫剧爆款率</div>
+      <div class="trend">Survival of the Best</div>
+    </div>
+  </aside>
+</article>
+
+<!-- ================== STAT GRID ================== -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-title">
+      <span class="section-num">01</span>
+      <h2>市场大盘 <span class="en">— By the Numbers</span></h2>
+    </div>
+    <span class="section-hint">单位：绝对值；来源：公开信息交叉校验</span>
+  </div>
+  <div class="stat-grid">
+    <div class="stat-cell">
+      <div class="num red">7.18<small>亿</small></div>
+      <div class="label">短剧用户</div>
+      <div class="sub">QuestMobile 2026</div>
+    </div>
+    <div class="stat-cell">
+      <div class="num">3.35<small>亿</small></div>
+      <div class="label">独立APP月活</div>
+      <div class="sub">红果领跑</div>
+    </div>
+    <div class="stat-cell">
+      <div class="num">2404<small>万</small></div>
+      <div class="label">红果漫剧MAU</div>
+      <div class="sub">头部单平台</div>
+    </div>
+    <div class="stat-cell">
+      <div class="num">95.9<small>万</small></div>
+      <div class="label">火龙漫剧DAU</div>
+      <div class="sub">腾讯入场</div>
+    </div>
+    <div class="stat-cell">
+      <div class="num red">40<small>亿$</small></div>
+      <div class="label">海外市场规模</div>
+      <div class="sub">2025 · ReelShort</div>
+    </div>
+    <div class="stat-cell">
+      <div class="num">10<small>亿¥</small></div>
+      <div class="label">QQ漫剧目标年流水</div>
+      <div class="sub">路线A · 2026</div>
+    </div>
+  </div>
 </section>
 
-<!-- KPI -->
-<div class="kpi-grid">
-  <div class="kpi">
-    <div class="kpi-label">短剧行业月活</div>
-    <div class="kpi-value">7.18<small>亿</small></div>
-    <div class="kpi-trend">独立APP同比 +50%+</div>
+<!-- ================== NEWS FEED ================== -->
+<section class="section" id="news">
+  <div class="section-header">
+    <div class="section-title">
+      <span class="section-num">02</span>
+      <h2>近月动态 <span class="en">— Chronicle</span></h2>
+    </div>
+    <span class="section-hint">按时间倒序 · 点击标题直达原始报道</span>
   </div>
-  <div class="kpi">
-    <div class="kpi-label">AI漫剧市场规模（2026E）</div>
-    <div class="kpi-value">240<small>亿元</small></div>
-    <div class="kpi-trend">同比 +46.6%</div>
-  </div>
-  <div class="kpi">
-    <div class="kpi-label">红果免费短剧 DAU</div>
-    <div class="kpi-value">破<small>亿</small></div>
-    <div class="kpi-trend">Q1 日活破亿，漫剧MAU 2404万</div>
-  </div>
-  <div class="kpi">
-    <div class="kpi-label">火龙漫剧 DAU（3/31）</div>
-    <div class="kpi-value">95.9<small>万</small></div>
-    <div class="kpi-trend">上线50天·人均时长53.7min</div>
-  </div>
-  <div class="kpi">
-    <div class="kpi-label">投流日耗（2月）</div>
-    <div class="kpi-value">5000<small>万/天</small></div>
-    <div class="kpi-trend">vs 去年12月 2000万/天</div>
-  </div>
-  <div class="kpi">
-    <div class="kpi-label">漫剧用户规模</div>
-    <div class="kpi-value">2.8<small>亿</small></div>
-    <div class="kpi-trend">vs 2025年 1.2亿</div>
-  </div>
-</div>
 
-<main class="container">
-
-<!-- 市场大盘 -->
-<section id="market">
-  <div class="section-head">
-    <h2>市场大盘</h2>
-    <span class="hint">数据来源：QuestMobile《2026短剧行业洞察报告》、艾媒咨询、DataEye</span>
-  </div>
-  <div class="grid grid-2">
-    <div class="card">
-      <h3>🚀 增速 <span class="badge badge-hot">历史最快</span></h3>
-      <p>2026年是中国内容产业增速最快的赛道，没有之一。AI漫剧年增速 276%，用户从 1.2亿 翻倍到 2.8亿。"这是供需两端同时爆发的典型早期红利窗口。"</p>
-      <ul>
-        <li>2024 市场规模：50亿</li>
-        <li>2025 市场规模：168–200亿</li>
-        <li>2026E 市场规模：240–250亿</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>💰 生产成本 · 产能</h3>
-      <table class="tbl" style="margin-top:6px;">
-        <thead><tr><th>类型</th><th>单价</th><th>单剧成本</th></tr></thead>
-        <tbody>
-          <tr><td>2D 精品漫</td><td class="num">1000元/min</td><td class="num">~10w</td></tr>
-          <tr><td>3D 动态漫</td><td class="num">2000–2500元/min</td><td class="num">10–20w</td></tr>
-          <tr><td>AI 仿真人漫</td><td class="num">3000元/min</td><td class="num">20–30w</td></tr>
-        </tbody>
-      </table>
-      <p style="margin-top:8px; font-size:13px;">精品漫单月产能 30–50部；解说/沙雕漫可达 1000–2000部。成本构成：剧本 10–15%、算力 30–40%、<strong>人力 40–50%</strong>。</p>
-    </div>
-    <div class="card">
-      <h3>👥 用户画像</h3>
-      <p>漫剧核心用户与 QQ 高度重合：<strong>18–35岁年轻群体</strong>，移动互联网原住民。男频占比 80–90%，女频 10–20%但是最大增量——女频虽头部不多但整体数据非常好，"小红书自来水传播"。</p>
-    </div>
-    <div class="card">
-      <h3>📺 平台格局</h3>
-      <p>"一超多强"格局：</p>
-      <ul>
-        <li><strong>红果免费短剧</strong>：MAU 3.04亿（+84.6%），漫剧MAU 2404万</li>
-        <li><strong>河马剧场</strong>：MAU 0.39亿（行业第二）</li>
-        <li><strong>火龙漫剧</strong>：DAU 95.9万，人均时长 53.7分钟</li>
-        <li><strong>百度柚漫剧</strong>：筹备中，10倍薪资挖人</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- 最新动态 -->
-<section id="news">
-  <div class="section-head">
-    <h2>最新行业动态</h2>
-    <span class="hint">按时间倒序 · 每次更新会刷新</span>
-  </div>
   <div class="news-list">
     <div class="news-item">
-      <div class="news-date">04/16</div>
-      <div class="news-body">
+      <div class="news-date">04·16</div>
+      <div>
         <div class="news-title">
-          <span class="badge badge-new">腾讯</span>
-          <a href="https://www.ithome.com/0/940/213.htm" target="_blank">腾讯视频发布 WorkRally，首款漫剧制作工业级 AI 平台</a>
+          <span class="news-tag red">重磅</span><a href="https://workrally.qq.com/" target="_blank">腾讯发布 WorkRally：首款工业级 AI 漫剧制作平台</a>
         </div>
-        <div class="news-meta">面向 2D/3D 动漫及 AI 仿真人剧，基于腾讯云的 AIGC 全流程工具集，本质为 CLI 工具，可被 AI Agent 驱动。与火龙升级漫剧合作政策同步发布。</div>
+        <div class="news-meta">基于腾讯云，面向 AI Agent 的 AIGC 漫剧视频创作全流程 CLI 工具集。2D / 3D / 仿真人全覆盖，行业首例系统化工具解决方案。</div>
       </div>
     </div>
+
     <div class="news-item">
-      <div class="news-date">04/16</div>
-      <div class="news-body">
+      <div class="news-date">04·15</div>
+      <div>
         <div class="news-title">
-          <span class="badge badge-hot">政策</span>
-          <a href="https://finance.sina.com.cn/wm/2026-04-16/doc-inhusvkh1598823.shtml" target="_blank">火龙漫剧 × 腾讯视频升级合作政策：S+级保底上不封顶</a>
+          <span class="news-tag">数据</span><a href="https://www.thepaper.cn/newsDetail_forward_32923779" target="_blank">QuestMobile《2026短剧行业洞察报告》：用户规模 7.18 亿</a>
         </div>
-        <div class="news-meta">从"流量灌溉"转向"价值深耕"。解说漫系数：火龙0.5、腾讯视频仅0.3。明显收紧低质内容扶持。</div>
+        <div class="news-meta">独立 APP 月活 3.35 亿、小程序 4.27 亿，同比均超 50%。红果漫剧 MAU 2404 万，火龙漫剧 DAU 95.9 万。</div>
       </div>
     </div>
+
     <div class="news-item">
-      <div class="news-date">04/13</div>
-      <div class="news-body">
+      <div class="news-date">04·10</div>
+      <div>
         <div class="news-title">
-          <span class="badge badge-key">数据</span>
-          <a href="https://www.thepaper.cn/newsDetail_forward_32923779" target="_blank">QuestMobile《2026短剧行业洞察报告》：用户规模7.18亿</a>
+          <span class="news-tag gold">监管</span><a href="https://www.sohu.com/a/1007232638_114941" target="_blank">红果一季度下架 1718 部 AI 漫剧，专项核查 1.5 万部</a>
         </div>
-        <div class="news-meta">独立APP月活3.35亿、小程序4.27亿，同比均超50%。红果漫剧MAU 2404万，火龙漫剧DAU 95.9万。</div>
+        <div class="news-meta">涉及未授权、低质、擦边等违规。4 月 7 日起进一步收严漫剧内容审核标准。"保底躺赚"时代终结，转向精品分账。</div>
       </div>
     </div>
+
     <div class="news-item">
-      <div class="news-date">04/10</div>
-      <div class="news-body">
+      <div class="news-date">04·01</div>
+      <div>
         <div class="news-title">
-          <span class="badge badge-warn">监管</span>
-          <a href="https://www.sohu.com/a/1007232638_114941" target="_blank">红果一季度下架1718部AI漫剧，专项核查1.5万部</a>
+          <span class="news-tag gold">政策</span><a href="https://m.thepaper.cn/newsDetail_forward_32869681" target="_blank">广电总局 AI 漫剧新规落地：未备案全网强制下线</a>
         </div>
-        <div class="news-meta">涉及未授权、低质、擦边等违规。4月7日起进一步收严漫剧内容审核标准。"保底躺赚"时代终结，转向精品分账。</div>
+        <div class="news-meta">4 月 1 日起"先备案后上线"，重点管控 AI 生成内容、版权、未成年人保护。合规成为生存底线。</div>
       </div>
     </div>
+
     <div class="news-item">
-      <div class="news-date">04/01</div>
-      <div class="news-body">
+      <div class="news-date">03·30</div>
+      <div>
         <div class="news-title">
-          <span class="badge badge-warn">政策</span>
-          <a href="https://m.thepaper.cn/newsDetail_forward_32869681" target="_blank">广电总局 AI 漫剧新规落地：未备案全网强制下线</a>
+          <span class="news-tag">行业</span><a href="https://www.36kr.com/p/3744995470786816" target="_blank">36氪：2026 AI漫剧趋势报告 · 风口浪尖2026见分晓</a>
         </div>
-        <div class="news-meta">4月1日起"先备案后上线"，重点管控 AI 生成内容、版权、未成年人保护。合规成为生存底线。</div>
+        <div class="news-meta">平台圈地、资本涌入、技术公司成"标准共建者"。爆款率仅 4%，精品化成关键词。</div>
       </div>
     </div>
+
     <div class="news-item">
-      <div class="news-date">03/30</div>
-      <div class="news-body">
+      <div class="news-date">03·24</div>
+      <div>
         <div class="news-title">
-          <span class="badge badge-key">行业</span>
-          <a href="https://www.36kr.com/p/3744995470786816" target="_blank">36氪：2026 AI漫剧趋势报告 · 风口浪尖2026见分晓</a>
-        </div>
-        <div class="news-meta">平台圈地、资本涌入、技术公司成"标准共建者"。爆款率仅4%，精品化成关键词。</div>
-      </div>
-    </div>
-    <div class="news-item">
-      <div class="news-date">03/24</div>
-      <div class="news-body">
-        <div class="news-title">
-          <span class="badge badge-key">生态</span>
-          <a href="https://k.sina.com.cn/article_7879922982_1d5ae15260190ab6ga.html" target="_blank">紫云山AIGC微短剧大会：阅文+红果+掌阅+技术公司合力建标准</a>
+          <span class="news-tag">生态</span><a href="https://k.sina.com.cn/article_7879922982_1d5ae15260190ab6ga.html" target="_blank">紫云山 AIGC 微短剧大会：阅文 + 红果 + 掌阅 + 技术公司合力建标准</a>
         </div>
         <div class="news-meta">阅文 IP 全面开放、红果保底激励、掌阅搭建生成工具——内容侧第一梯队布局基本成型。</div>
       </div>
     </div>
+
     <div class="news-item">
-      <div class="news-date">03/19</div>
-      <div class="news-body">
+      <div class="news-date">03·19</div>
+      <div>
         <div class="news-title">
-          <span class="badge badge-ok">财报</span>
-          <a href="https://finance.sina.cn/2026-03-19/detail-inhrpsps4582887.d.html" target="_blank">阅文 2025 全年业绩：AI漫剧收入破亿元大关</a>
+          <span class="news-tag">财报</span><a href="https://finance.sina.cn/2026-03-19/detail-inhrpsps4582887.d.html" target="_blank">阅文 2025 全年业绩：AI 漫剧收入破亿元大关</a>
         </div>
         <div class="news-meta">十部漫剧播放破亿、百部破千万。"IP+AI"成为新增长引擎，2026 继续重点布局。</div>
       </div>
     </div>
+
     <div class="news-item">
-      <div class="news-date">03/18</div>
-      <div class="news-body">
+      <div class="news-date">03·18</div>
+      <div>
         <div class="news-title">
-          <span class="badge badge-warn">红果政策</span>
-          <a href="https://www.tahou.com/article/200990911852072965" target="_blank">红果扶持政策转向：告别"保底躺赚"，拥抱"精品分账"</a>
+          <span class="news-tag gold">红果政策</span><a href="https://www.tahou.com/article/200990911852072965" target="_blank">红果扶持政策转向：告别"保底躺赚"，拥抱"精品分账"</a>
         </div>
-        <div class="news-meta">向AI仿真人漫倾斜，收紧低质内容的保底，行业真正进入精品化阶段。</div>
+        <div class="news-meta">向 AI 仿真人漫倾斜，收紧低质内容的保底，行业真正进入精品化阶段。</div>
       </div>
     </div>
+
     <div class="news-item">
-      <div class="news-date">03/03</div>
-      <div class="news-body">
+      <div class="news-date">03·03</div>
+      <div>
         <div class="news-title">
-          <span class="badge badge-hot">爆款</span>
-          <a href="https://news.qq.com/rain/a/20260303A05GTF00" target="_blank">首个"漫剧春节档"：《西游，错把玉帝当亲爹》35小时破亿</a>
+          <span class="news-tag red">爆款</span><a href="https://news.qq.com/rain/a/20260303A05GTF00" target="_blank">首个"漫剧春节档"：《西游，错把玉帝当亲爹》35 小时破亿</a>
         </div>
-        <div class="news-meta">星火深智出品，10人团队、20天周期、10万算力成本，红果历史第一热度。春节档共有《大小姐，你把恶魔执事调成啥了》等多部破圈。</div>
+        <div class="news-meta">星火深智出品，10 人团队、20 天周期、10 万算力成本，红果历史第一热度。春节档另有《大小姐，你把恶魔执事调成啥了》等多部破圈。</div>
       </div>
     </div>
+
     <div class="news-item">
-      <div class="news-date">02/05</div>
-      <div class="news-body">
+      <div class="news-date">02·05</div>
+      <div>
         <div class="news-title">
-          <span class="badge badge-new">腾讯</span>
-          <a href="https://news.qq.com/rain/a/20260205A02SF300" target="_blank">腾讯推出"火龙漫剧"APP，正式入场 AI 漫剧赛道</a>
+          <span class="news-tag red">腾讯</span><a href="https://news.qq.com/rain/a/20260205A02SF300" target="_blank">腾讯推出"火龙漫剧"APP，正式入场 AI 漫剧赛道</a>
         </div>
         <div class="news-meta">腾讯视频内部创新项目，主打"免费爽看"。用户在腾讯视频主端无法直接观看漫剧，需下载火龙。</div>
       </div>
@@ -420,362 +1011,471 @@
   </div>
 </section>
 
-<!-- 平台格局 -->
-<section id="platform">
-  <div class="section-head">
-    <h2>平台格局</h2>
-    <span class="hint">主要分发方的策略 · 保底 · 分账</span>
+<!-- ================== PULL-QUOTE ================== -->
+<div class="pullquote">
+  给什么内容，关键看你们能给多少流量。<br>
+  <span style="font-size:0.7em; color:var(--ink-dim); font-style:italic;">——点众，回答"能否给 QQ 漫剧供内容"时</span>
+</div>
+
+<!-- ================== PLATFORMS ================== -->
+<section class="section" id="platforms">
+  <div class="section-header">
+    <div class="section-title">
+      <span class="section-num">03</span>
+      <h2>平台格局 <span class="en">— The Arena</span></h2>
+    </div>
+    <span class="section-hint">主要分发方的定位 · 保底 · 分账策略</span>
   </div>
-  <table class="tbl" style="background:var(--bg-card); border-radius:var(--radius); overflow:hidden;">
-    <thead>
-      <tr>
-        <th>平台</th><th>定位</th><th>保底</th><th>分成</th><th>状态</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>红果</strong>（字节）</td>
-        <td>算法分发+广告变现</td>
-        <td class="num">2–8万/部，超头部可达360万</td>
-        <td class="num">独家基础20%，叠加扶持可达90–95%</td>
-        <td><span class="badge badge-hot">月分账5亿，遥遥领先</span></td>
-      </tr>
-      <tr>
-        <td><strong>火龙</strong>（腾讯视频）</td>
-        <td>IP+版权+分账</td>
-        <td class="num">部分特定CP给保底，S+级上不封顶</td>
-        <td class="num">独家200%返点，非独家100%</td>
-        <td><span class="badge badge-new">上线50天，榜单被中文在线占据十几天</span></td>
-      </tr>
-      <tr>
-        <td><strong>快手</strong></td>
-        <td>PGC补贴+UGC激励</td>
-        <td class="num">无</td>
-        <td class="num">99%，投流4%返点</td>
-        <td>入局中</td>
-      </tr>
-      <tr>
-        <td><strong>百度柚漫剧</strong></td>
-        <td>独立App</td>
-        <td>—</td>
-        <td>—</td>
-        <td><span class="badge badge-warn">筹备中，10倍薪资挖人</span></td>
-      </tr>
-      <tr>
-        <td><strong>小红书</strong></td>
-        <td>女频+自来水传播</td>
-        <td>—</td>
-        <td>—</td>
-        <td>春节档100部仅10部独家，以二轮剧为主</td>
-      </tr>
-      <tr style="background:var(--accent-dim); color:#fff;">
-        <td><strong>QQ漫剧</strong>（规划中）</td>
-        <td>社交化差异路线</td>
-        <td class="num">无保底</td>
-        <td class="num">基础50%，最高100%</td>
-        <td><span class="badge badge-key">5月-6月 MVP → Q3 全量</span></td>
-      </tr>
-    </tbody>
-  </table>
+
+  <div class="tbl-wrap">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>平台</th><th>定位</th><th>保底政策</th><th>分成模式</th><th>市场状态</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>红果</strong> · 字节</td>
+          <td>算法分发 + 广告变现</td>
+          <td class="num">2–8 万 / 部，超头部达 360 万</td>
+          <td class="num">独家基础 20%，叠加扶持可达 90–95%</td>
+          <td>月分账 5 亿，行业领跑</td>
+        </tr>
+        <tr>
+          <td><strong>火龙</strong> · 腾讯视频</td>
+          <td>IP + 版权 + 分账</td>
+          <td class="num">特定 CP 保底，S+ 上不封顶</td>
+          <td class="num">独家 200% 返点，非独家 100%</td>
+          <td>上线 50 天，榜被中文在线占据</td>
+        </tr>
+        <tr>
+          <td><strong>快手</strong></td>
+          <td>PGC 补贴 + UGC 激励</td>
+          <td class="num">无</td>
+          <td class="num">99%，投流 4% 返点</td>
+          <td>入局中</td>
+        </tr>
+        <tr>
+          <td><strong>百度柚漫剧</strong></td>
+          <td>独立 App</td>
+          <td>—</td>
+          <td>—</td>
+          <td>筹备中，10 倍薪资挖人</td>
+        </tr>
+        <tr>
+          <td><strong>小红书</strong></td>
+          <td>女频 + 自来水传播</td>
+          <td>—</td>
+          <td>—</td>
+          <td>春节档 100 部仅 10 部独家</td>
+        </tr>
+        <tr class="qq-row">
+          <td><strong>QQ 漫剧</strong>（规划中）</td>
+          <td>社交化差异路线</td>
+          <td class="num">无保底</td>
+          <td class="num">基础 50%，最高 100%</td>
+          <td>5–6 月 MVP → Q3 全量</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </section>
 
-<!-- 内容供给 -->
-<section id="content">
-  <div class="section-head">
-    <h2>内容供给方（CP）全景</h2>
-    <span class="hint">阅文/中文在线/点众/灵矩/星火等 · 产能+合作模式</span>
+<!-- ================== CP / STUDIOS ================== -->
+<section class="section" id="cp">
+  <div class="section-header">
+    <div class="section-title">
+      <span class="section-num">04</span>
+      <h2>内容供给方 <span class="en">— Studios &amp; IP Holders</span></h2>
+    </div>
+    <span class="section-hint">阅文 / 中文在线 / 点众 / 灵矩 / 星火 — 产能 × 合作形态</span>
   </div>
-  <div class="grid grid-2">
-    <div class="card">
-      <h3>📚 传统内容平台（自有版权IP）</h3>
-      <table class="tbl">
-        <thead><tr><th>公司</th><th>月产能</th><th>特点</th></tr></thead>
-        <tbody>
-          <tr><td>阅文</td><td class="num">30–40部</td><td>与QQ深度合作，自有IP，独家对接火龙/红果</td></tr>
-          <tr><td>中文在线</td><td class="num">50部</td><td>独家内容占70%，《仙人归来》代表作</td></tr>
-          <tr><td>七猫</td><td class="num">1000部</td><td>多为合制，体量大但入局晚，有自有App</td></tr>
-          <tr><td>点众</td><td class="num">200部</td><td>全球第二大短剧平台，真人主业，刚布局漫剧</td></tr>
-        </tbody>
-      </table>
+
+  <div class="columns-2">
+    <div class="article">
+      <div class="article-kicker">Category I · 传统内容平台</div>
+      <h3>自有版权 IP 的"长臂巨人"</h3>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>公司</th><th>月产能</th><th>特点</th></tr></thead>
+          <tbody>
+            <tr><td>阅文</td><td class="num">30–40 部</td><td>与 QQ 深度合作，自有 IP，独家对接火龙 / 红果</td></tr>
+            <tr><td>中文在线</td><td class="num">50 部</td><td>独家内容占 70%，《仙人归来》代表作</td></tr>
+            <tr><td>七猫</td><td class="num">1000 部</td><td>多为合制，体量大但入局晚，有自有 App</td></tr>
+            <tr><td>点众</td><td class="num">200 部</td><td>全球第二大短剧平台，真人主业，刚布局漫剧</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="card">
-      <h3>🎨 头部漫剧公司</h3>
-      <table class="tbl">
-        <thead><tr><th>公司</th><th>月产能</th><th>特点</th></tr></thead>
-        <tbody>
-          <tr><td>灵矩动漫</td><td class="num">50–80部</td><td>《末日壁垒》，头部梯队，多数独家给红果</td></tr>
-          <tr><td>友和文化</td><td class="num">30–40部</td><td>2024底全面切入AI漫剧赛道</td></tr>
-          <tr><td>星火深智</td><td class="num">25–30部</td><td><strong>技术第一梯队</strong>，《西游：错把玉帝当亲爹》35小时破亿</td></tr>
-          <tr><td>灵漫快创</td><td class="num">40–60部</td><td>主打游戏类漫剧，《气运三角洲》过亿</td></tr>
-        </tbody>
-      </table>
+
+    <div class="article">
+      <div class="article-kicker">Category II · 头部漫剧公司</div>
+      <h3>站在前排的"技术派"</h3>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>公司</th><th>月产能</th><th>特点</th></tr></thead>
+          <tbody>
+            <tr><td>灵矩动漫</td><td class="num">50–80 部</td><td>《末日壁垒》，多数独家给红果</td></tr>
+            <tr><td>友和文化</td><td class="num">30–40 部</td><td>2024 底全面切入 AI 漫剧赛道</td></tr>
+            <tr><td>星火深智</td><td class="num">25–30 部</td><td><strong>技术第一梯队</strong>，《西游》35 小时破亿</td></tr>
+            <tr><td>灵漫快创</td><td class="num">40–60 部</td><td>主打游戏类漫剧，《气运三角洲》破亿</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="card">
-      <h3>🌊 长剧/出海/其他</h3>
-      <table class="tbl">
-        <thead><tr><th>公司</th><th>月产能</th><th>特点</th></tr></thead>
-        <tbody>
-          <tr><td>恒星引力</td><td>少量精品</td><td>国内头部长剧公司，只做超头部</td></tr>
-          <tr><td>井漫</td><td class="num">1000部</td><td>出海第一梯队，北美为主，tiktok/facebook</td></tr>
-          <tr><td>炫佳科技</td><td class="num">5部</td><td>《妖龙古帝》、AI工具 Kino视界</td></tr>
-        </tbody>
-      </table>
+
+    <div class="article">
+      <div class="article-kicker">Category III · 长剧 / 出海 / 其他</div>
+      <h3>远征海外、坚守精品的"边路军"</h3>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>公司</th><th>月产能</th><th>特点</th></tr></thead>
+          <tbody>
+            <tr><td>恒星引力</td><td>少量精品</td><td>国内头部长剧公司，只做超头部</td></tr>
+            <tr><td>井漫</td><td class="num">1000 部</td><td>出海第一梯队，北美为主，TikTok / Facebook</td></tr>
+            <tr><td>炫佳科技</td><td class="num">5 部</td><td>《妖龙古帝》· AI 工具 Kino 视界</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="card">
-      <h3>🔗 QQ 可拿到的内容（首月900+部）</h3>
+
+    <div class="article" style="border:2px solid var(--red); padding:22px 26px; position:relative;">
+      <div class="article-kicker" style="color:var(--red);">★ For QQ · 首月 900+ 部</div>
+      <h3>QQ 漫剧能拿到的"第一批子弹"</h3>
       <ul>
-        <li>阅文集团：<strong>300部</strong>（100部/月，已确认）</li>
-        <li>点众：<strong>800部精品 + 1000部讲书漫</strong>（测试期30部试水，初步意向）</li>
-        <li>中文在线：<strong>300部</strong>（20部/月，初步意向）</li>
-        <li>友和：<strong>100–200部</strong>（20部/月）</li>
-        <li>其他CP：30部（洽谈中）</li>
+        <li><strong>阅文集团 · 300 部</strong>（100 部 / 月，已确认）</li>
+        <li><strong>点众 · 800 部精品 + 1000 部讲书漫</strong>（测试期 30 部试水，初步意向）</li>
+        <li><strong>中文在线 · 300 部</strong>（20 部 / 月，初步意向）</li>
+        <li><strong>友和 · 100–200 部</strong>（20 部 / 月）</li>
+        <li>其他 CP · 30 部（洽谈中）</li>
       </ul>
     </div>
   </div>
 </section>
 
-<!-- 爆款案例 -->
-<section id="hits">
-  <div class="section-head">
-    <h2>爆款案例库</h2>
-    <span class="hint">可复盘、可参考的标杆作品</span>
+<!-- ================== HITS ================== -->
+<section class="section" id="hits">
+  <div class="section-header">
+    <div class="section-title">
+      <span class="section-num">05</span>
+      <h2>爆款案例库 <span class="en">— Masterpieces</span></h2>
+    </div>
+    <span class="section-hint">可复盘、可参考的标杆作品</span>
   </div>
-  <div class="grid grid-3">
-    <div class="card">
-      <h3>《西游，错把玉帝当亲爹》 <span class="badge badge-hot">标杆</span></h3>
-      <p>星火深智出品 · 男频神话</p>
+
+  <div class="columns-3">
+    <div class="hit">
+      <div class="hit-rank">01 · 标杆</div>
+      <h3>西游，错把玉帝当亲爹</h3>
+      <div class="sub">星火深智 · 男频神话</div>
       <ul>
-        <li>35小时播放破亿</li>
-        <li>全网累计 2.3亿 · 红果11天霸榜</li>
-        <li>10人团队 · 20天周期 · 10万算力成本</li>
+        <li>35 小时播放破亿</li>
+        <li>全网累计 2.3 亿 · 红果 11 天霸榜</li>
+        <li>10 人团队 · 20 天周期 · 10 万算力</li>
         <li>突破"爽剧同质化"的黑马</li>
       </ul>
     </div>
-    <div class="card">
-      <h3>《气运三角洲，我凭操作吊打全球》 <span class="badge badge-key">游戏向</span></h3>
-      <p>灵漫快创出品 · 游戏漫剧代表作</p>
+    <div class="hit">
+      <div class="hit-rank">02 · 游戏向</div>
+      <h3>气运三角洲，我凭操作吊打全球</h3>
+      <div class="sub">灵漫快创 · 游戏漫剧代表作</div>
       <ul>
-        <li>29小时播放破2亿</li>
-        <li>"游戏×漫剧"典型 · 抖音数据优异</li>
-        <li>为 QQ"边看边玩"路线提供范式</li>
+        <li>29 小时播放破 2 亿</li>
+        <li>"游戏 × 漫剧"典型 · 抖音数据优异</li>
+        <li>为 QQ"边看边玩"提供范式</li>
       </ul>
     </div>
-    <div class="card">
-      <h3>《末日壁垒》 <span class="badge badge-key">男频</span></h3>
-      <p>灵矩动漫 · 头部梯队</p>
+    <div class="hit">
+      <div class="hit-rank">03 · 男频</div>
+      <h3>末日壁垒</h3>
+      <div class="sub">灵矩动漫 · 头部梯队</div>
       <ul>
         <li>上线不到一周巨量消耗破峰</li>
-        <li>独家红果 · 少量抖音/快手/视频号投流</li>
+        <li>独家红果 · 少量抖音 / 快手 / 视频号投流</li>
       </ul>
     </div>
-    <div class="card">
-      <h3>《宇宙尽头的书店》 <span class="badge badge-ok">女频/科幻</span></h3>
-      <p>火龙漫剧 · 女频精品化代表</p>
+    <div class="hit">
+      <div class="hit-rank">04 · 女频精品</div>
+      <h3>宇宙尽头的书店</h3>
+      <div class="sub">火龙漫剧 · 女频精品化代表</div>
       <ul>
         <li>火龙主推，验证女频向商业化可行</li>
         <li>画质 + 情绪节奏均高水平</li>
       </ul>
     </div>
-    <div class="card">
-      <h3>《好一个乖乖女》 <span class="badge badge-key">出圈</span></h3>
-      <p>点众出品 · 跨平台传播典型</p>
+    <div class="hit">
+      <div class="hit-rank">05 · 出圈</div>
+      <h3>好一个乖乖女</h3>
+      <div class="sub">点众出品 · 跨平台传播</div>
       <ul>
         <li>小红书 24% 用户提及</li>
         <li>带动点众漫剧布局信号</li>
       </ul>
     </div>
-    <div class="card">
-      <h3>《大小姐，你把恶魔执事调成啥了》 <span class="badge badge-ok">女频</span></h3>
-      <p>春节档女频破圈 · 小红书自来水</p>
+    <div class="hit">
+      <div class="hit-rank">06 · 女频</div>
+      <h3>大小姐，你把恶魔执事调成啥了</h3>
+      <div class="sub">春节档女频破圈 · 小红书自来水</div>
       <ul>
-        <li>甜宠+反差 · 女频头部</li>
-        <li>小红书种草→抖音播放的典型链路</li>
+        <li>甜宠 + 反差 · 女频头部</li>
+        <li>小红书种草 → 抖音播放典型链路</li>
       </ul>
     </div>
   </div>
 </section>
 
-<!-- 技术 AI -->
-<section id="tech">
-  <div class="section-head">
-    <h2>技术 · AI 工具</h2>
-    <span class="hint">工具链快速迭代，成本持续下探</span>
+<!-- ================== TECH ================== -->
+<section class="section" id="tech">
+  <div class="section-header">
+    <div class="section-title">
+      <span class="section-num">06</span>
+      <h2>技术 · AI 工具 <span class="en">— The Toolchain</span></h2>
+    </div>
+    <span class="section-hint">工具链快速迭代 · 成本持续下探</span>
   </div>
-  <div class="grid grid-3">
-    <div class="card">
-      <h3>腾讯 WorkRally <span class="badge badge-new">4/16新发</span></h3>
-      <p>首款漫剧制作工业级 AI 平台，基于腾讯云，面向 AI Agent 的 AIGC 漫剧视频创作全流程 CLI 工具集。2D/3D/仿真人全覆盖。</p>
+
+  <div class="columns-3">
+    <div class="article">
+      <div class="article-kicker">Tencent · 04·16 新发</div>
+      <h3>WorkRally</h3>
+      <p>首款漫剧制作工业级 AI 平台，基于腾讯云，面向 AI Agent 的 AIGC 漫剧视频创作全流程 CLI 工具集。<strong>2D / 3D / 仿真人全覆盖</strong>。</p>
       <a class="source" href="https://workrally.qq.com/" target="_blank">workrally.qq.com →</a>
     </div>
-    <div class="card">
-      <h3>Seedance（字节）</h3>
-      <p>字节跳动视频生成工具。首尾帧控制实现连贯叙事，直接推动了 AI 仿真人漫的热潮。Seedance 2.0 于 2026/2 上线。</p>
+    <div class="article">
+      <div class="article-kicker">ByteDance</div>
+      <h3>Seedance</h3>
+      <p>字节跳动视频生成工具。首尾帧控制实现连贯叙事，直接推动了 AI 仿真人漫的热潮。<strong>Seedance 2.0 于 2026/2 上线</strong>。</p>
     </div>
-    <div class="card">
-      <h3>腾讯云 / 商汤 / 万兴</h3>
-      <p>为漫剧公司提供自动化分镜、固定角色+几十分镜并行生产等工具。工具服务已经非常成熟。</p>
+    <div class="article">
+      <div class="article-kicker">Tencent Cloud · Sensetime · Wondershare</div>
+      <h3>标准工具矩阵</h3>
+      <p>为漫剧公司提供自动化分镜、固定角色 + 几十分镜并行生产等工具。<strong>工具服务已经非常成熟</strong>。</p>
     </div>
-    <div class="card">
-      <h3>炫佳科技 Kino视界</h3>
-      <p>腰部漫剧公司自研 AI 工具。"技术公司正在成为 AI 漫剧的标准共建者"。</p>
+    <div class="article">
+      <div class="article-kicker">炫佳科技</div>
+      <h3>Kino 视界</h3>
+      <p>腰部漫剧公司自研 AI 工具。"技术公司正在成为 AI 漫剧的<strong>标准共建者</strong>"。</p>
     </div>
-    <div class="card">
-      <h3>脚本/剧本：DeepSeek / 豆包 / 通义</h3>
-      <p>AI 写剧本与改编已成标配。剧本占总成本 10–15%，但是爆款核心。</p>
+    <div class="article">
+      <div class="article-kicker">Scripts · 剧本</div>
+      <h3>DeepSeek / 豆包 / 通义</h3>
+      <p>AI 写剧本与改编已成标配。剧本占总成本 10–15%，但<strong>是爆款核心</strong>。</p>
     </div>
-    <div class="card">
-      <h3>成本下降曲线 <span class="badge badge-key">关键</span></h3>
-      <p>漫剧制作成本从"千元跌至百元"——按 aimjfront 复盘。AI 将人力成本（原占 40–50%）大幅压缩，是精品化的主要驱动力。</p>
+    <div class="article">
+      <div class="article-kicker">Cost Curve · 关键趋势</div>
+      <h3>成本下降曲线</h3>
+      <p>漫剧制作成本从"<strong>千元跌至百元</strong>"——按 aimjfront 复盘。AI 将人力成本（原占 40–50%）大幅压缩，是精品化的主要驱动力。</p>
     </div>
   </div>
 </section>
 
-<!-- 政策监管 -->
-<section id="regulation">
-  <div class="section-head">
-    <h2>政策 · 监管</h2>
-    <span class="hint">合规成为生存底线</span>
+<!-- ================== REGULATION ================== -->
+<section class="section" id="rules">
+  <div class="section-header">
+    <div class="section-title">
+      <span class="section-num">07</span>
+      <h2>政策 · 监管 <span class="en">— Rules of the Game</span></h2>
+    </div>
+    <span class="section-hint">合规成为生存底线</span>
   </div>
-  <div class="grid grid-2">
-    <div class="card">
-      <h3>🚨 4/1 广电新规落地 <span class="badge badge-warn">强监管</span></h3>
+
+  <div class="columns-2">
+    <div class="article">
+      <div class="article-kicker">04·01 · 强监管</div>
+      <h3>广电新规落地</h3>
       <p>国家广电总局明确：未履行备案程序的存量动画微短剧 <strong>全网强制下线</strong>，新作必须"先备案后上线"。</p>
       <ul>
-        <li>AIGC类、漫画类首次纳入</li>
+        <li>AIGC 类、漫画类首次纳入</li>
         <li>重点监管：版权、未成年人保护、内容红线</li>
         <li>对小团队、野蛮生长模式打击最大</li>
       </ul>
     </div>
-    <div class="card">
-      <h3>🛡️ 红果主动治理</h3>
-      <p>一季度下架违规 AI 漫剧 1718部，专项核查 1.5万部，额外处置 670部。4/7 起进一步收严审核标准。</p>
+    <div class="article">
+      <div class="article-kicker">红果 · 主动治理</div>
+      <h3>下架 1718 部、核查 1.5 万部</h3>
+      <p>一季度下架违规 AI 漫剧 1718 部，专项核查 1.5 万部，额外处置 670 部。4·7 起进一步收严审核标准。</p>
       <ul>
         <li>未授权 IP → 下架</li>
         <li>AI 素材违规 → 下架</li>
-        <li>低质解说/擦边 → 下架</li>
+        <li>低质解说 / 擦边 → 下架</li>
       </ul>
     </div>
-    <div class="card">
-      <h3>⚖️ 版权与原创保护</h3>
-      <p>国家知识产权局明确提出要为 AI 漫剧"立规"。版权是平台最大隐性成本，对 QQ 而言，绑定阅文/腾讯视频 IP 是安全港。</p>
+    <div class="article">
+      <div class="article-kicker">版权 · 原创保护</div>
+      <h3>国家知识产权局出面"立规"</h3>
+      <p>版权是平台最大隐性成本。对 QQ 而言，绑定<strong>阅文 / 腾讯视频 IP</strong> 是天然安全港。</p>
     </div>
-    <div class="card">
-      <h3>🔄 平台政策转向</h3>
-      <p>红果从"保底躺赚"→"精品分账"，火龙从"流量灌溉"→"价值深耕"。全行业转向精品化，对中小CP是重大利空、对有质量CP是利好。</p>
+    <div class="article">
+      <div class="article-kicker">平台政策 · 转向</div>
+      <h3>从"保底躺赚"到"精品分账"</h3>
+      <p>红果"流量灌溉"→ "价值深耕"。全行业转向精品化——对中小 CP 是重大利空、对优质 CP 是利好。</p>
     </div>
   </div>
 </section>
 
-<!-- 出海 -->
-<section id="overseas">
-  <div class="section-head">
-    <h2>出海动态</h2>
-    <span class="hint">海外用户付费意愿强，窗口期打开</span>
-  </div>
-  <div class="grid grid-3">
-    <div class="card">
-      <h3>🌏 海外市场规模</h3>
-      <p>2025年海外微短剧产业规模 <strong>40亿美元</strong>，2026E 超 50亿美元。25年内购收入破 20亿美元。</p>
+<!-- ================== OVERSEAS ================== -->
+<section class="section" id="overseas">
+  <div class="section-header">
+    <div class="section-title">
+      <span class="section-num">08</span>
+      <h2>出海动态 <span class="en">— Going Global</span></h2>
     </div>
-    <div class="card">
-      <h3>📱 主要阵地</h3>
+    <span class="section-hint">海外用户付费意愿强 · 窗口期打开</span>
+  </div>
+
+  <div class="columns-3">
+    <div class="article">
+      <div class="article-kicker">Market Scale</div>
+      <h3>海外市场规模</h3>
+      <p>2025 年海外微短剧产业规模 <strong>40 亿美元</strong>，2026E 超 <strong>50 亿美元</strong>。25 年内购收入破 20 亿美元。</p>
+    </div>
+    <div class="article">
+      <div class="article-kicker">Main Battlefields</div>
+      <h3>主要阵地</h3>
       <ul>
         <li><strong>ReelShort / DramaBox</strong>：北美单日流水破百万美金</li>
-        <li><strong>TikTok / Facebook</strong>：主要分发</li>
-        <li><strong>井漫</strong>：国内出海第一梯队，1000部/月</li>
+        <li><strong>TikTok / Facebook</strong>：主要分发渠道</li>
+        <li><strong>井漫</strong>：国内出海第一梯队，1000 部 / 月</li>
       </ul>
     </div>
-    <div class="card">
-      <h3>🎯 海外偏好</h3>
-      <p>系统/逆袭/情感是漫剧热门题材，通常以组合形式呈现。<strong>超半数海外用户愿为 AI 参与制作的短剧付费</strong>。</p>
+    <div class="article">
+      <div class="article-kicker">Taste of the West</div>
+      <h3>海外偏好</h3>
+      <p>系统 / 逆袭 / 情感是漫剧热门题材。<strong>超半数海外用户愿为 AI 参与制作的短剧付费</strong>。</p>
     </div>
   </div>
 </section>
 
-<!-- QQ 策略 -->
-<section id="qq" class="qq-section">
-  <div class="section-head">
-    <h2>QQ 漫剧策略参考 · 行业信号 → 行动建议</h2>
-    <span class="hint">基于 0327/0417 两份内部汇报 + 行业情报交叉推导</span>
+<!-- ================== QQ STRATEGY ================== -->
+<section class="section" id="qq">
+  <div class="section-header">
+    <div class="section-title">
+      <span class="section-num">09</span>
+      <h2>QQ 漫剧策略参考 <span class="en">— What It Means for Us</span></h2>
+    </div>
+    <span class="section-hint">基于 0327 / 0417 两份内部汇报 + 行业情报交叉推导</span>
   </div>
 
-  <div class="callout">
-    <strong>核心定位</strong>：不做第二个红果，不做第二个火龙。依托 IM 生态、游戏协同、AI玩法，走"<strong>社交化漫剧</strong>"的差异化路径。5 亿 MAU 天然流量 × 35 岁以下年轻用户与漫剧受众高度重合，是 QQ 的核心资产。
+  <div class="qq-callout">
+    <p><strong>核心定位：</strong>不做第二个红果，不做第二个火龙。依托 IM 生态、游戏协同、AI 玩法，走"<strong>社交化漫剧</strong>"的差异化路径。<strong>5 亿 MAU</strong> 天然流量 × 35 岁以下年轻用户与漫剧受众高度重合，是 QQ 的核心资产。</p>
   </div>
 
-  <div class="insight">
-    <div class="insight-title">🎯 信号 1：行业从"保底躺赚"转向"精品分账"</div>
-    <p><strong>行业证据</strong>：红果、火龙双双收紧低质内容的保底；广电新规强制备案。<br>
-    <strong>对 QQ 的启示</strong>：QQ 初版政策"<strong>无保底 + 最高100%分成 + 全网播放量超100万的内容优先</strong>"与行业趋势完全对齐，且对优质CP是正向激励。建议在初期就强化"优质内容评级（S+/S/A/B）"的运营动作，把"精品优先"做成 QQ 的品牌标签。</p>
+  <div class="signal">
+    <div class="signal-num">01</div>
+    <div class="signal-body">
+      <h3>行业从"保底躺赚"转向"精品分账"</h3>
+      <div class="signal-evidence"><span class="signal-tag">EVIDENCE</span>红果、火龙双双收紧低质内容的保底；广电新规强制备案。</div>
+      <div class="signal-action"><span class="signal-tag red">ACTION</span>QQ 初版政策"<strong>无保底 + 最高 100% 分成 + 全网 100 万播放量优先</strong>"与行业趋势完全对齐。建议在初期就强化"<strong>优质内容评级（S+/S/A/B）</strong>"的运营动作，把"精品优先"做成 QQ 的品牌标签。</div>
+    </div>
   </div>
 
-  <div class="insight">
-    <div class="insight-title">🎮 信号 2：游戏×漫剧是2026最重要融合方向</div>
-    <p><strong>行业证据</strong>：《气运三角洲》29小时破2亿；和平精英、王者荣耀主动找短剧/漫剧合作；37互娱、米哈游也在接触 CP 做定制系列。腾讯长青游戏（三角洲行动、王者、金铲铲、DNF）天然具备漫剧化基础。<br>
-    <strong>对 QQ 的启示</strong>：这是 QQ 真正的"护城河"，整个腾讯生态里 QQ 是最有资格做游戏漫剧落地场景的。建议：
-    <ul>
-      <li><strong>抢 IP 首发权</strong>：与天美/琳琅协同，三角洲2、王者新赛季、新游宣发的配套漫剧首发放 QQ</li>
-      <li><strong>"边看边玩"闭环</strong>：漫剧播放页"立即体验"→ 跳转游戏下载/小游戏</li>
-      <li><strong>剧情分支×游戏奖励</strong>：互动漫剧剧情选择 → 解锁游戏道具/皮肤（借鉴《我在王者当大侠》）</li>
-    </ul></p>
+  <div class="signal">
+    <div class="signal-num">02</div>
+    <div class="signal-body">
+      <h3>游戏 × 漫剧是 2026 最重要融合方向</h3>
+      <div class="signal-evidence"><span class="signal-tag">EVIDENCE</span>《气运三角洲》29 小时破 2 亿；和平精英、王者荣耀主动找短剧 / 漫剧合作；37 互娱、米哈游也在接触 CP 做定制系列。腾讯长青游戏（三角洲、王者、金铲铲、DNF）天然具备漫剧化基础。</div>
+      <div class="signal-action"><span class="signal-tag red">ACTION</span>这是 QQ 真正的"护城河"，整个腾讯生态里 QQ 是最有资格做游戏漫剧落地场景的。
+        <ul>
+          <li><strong>抢 IP 首发权</strong>：与天美 / 琳琅协同，新游 / 新赛季配套漫剧首发放 QQ</li>
+          <li><strong>"边看边玩"闭环</strong>：漫剧播放页"立即体验"→ 跳转游戏下载 / 小游戏</li>
+          <li><strong>剧情分支 × 游戏奖励</strong>：互动漫剧选择 → 解锁游戏道具 / 皮肤</li>
+        </ul>
+      </div>
+    </div>
   </div>
 
-  <div class="insight">
-    <div class="insight-title">💗 信号 3：女频是最大增量蓝海，小红书是自来水主阵地</div>
-    <p><strong>行业证据</strong>：女频仅占 10–20%，但 #甜宠# 累计播放超28亿；小红书女频短剧口碑反哺抖音、红果；《宇宙尽头的书店》、《大小姐》等精品化女频开始跑出来。<br>
-    <strong>对 QQ 的启示</strong>：
-    <ul>
-      <li><strong>女频差异化供给</strong>：QQ 用户年轻化+女性比例，主动在CP合作中扶持女频赛道（叠加内容评级激励）</li>
-      <li><strong>小红书内容分发反哺</strong>：女频漫剧的主阵地是小红书，QQ 可与小红书/公众号联动做"女频漫剧种草→QQ 观看"的流量链路</li>
-      <li><strong>脑洞秀 UGC 女频</strong>：邀请好友虚拟形象出演甜宠剧情，天然适配女频社交传播</li>
-    </ul></p>
+  <div class="signal">
+    <div class="signal-num">03</div>
+    <div class="signal-body">
+      <h3>女频是最大增量蓝海，小红书是自来水主阵地</h3>
+      <div class="signal-evidence"><span class="signal-tag">EVIDENCE</span>女频仅占 10–20%，但 #甜宠# 累计播放超 28 亿；小红书女频短剧口碑反哺抖音 / 红果；《宇宙尽头的书店》《大小姐》等精品化女频开始跑出来。</div>
+      <div class="signal-action"><span class="signal-tag red">ACTION</span>
+        <ul>
+          <li><strong>女频差异化供给</strong>：QQ 用户年轻化 + 女性比例，主动在 CP 合作中扶持女频赛道</li>
+          <li><strong>小红书反哺</strong>：做"女频漫剧种草 → QQ 观看"的流量链路</li>
+          <li><strong>脑洞秀 UGC 女频</strong>：邀请好友虚拟形象出演甜宠剧情，天然适配女频社交传播</li>
+        </ul>
+      </div>
+    </div>
   </div>
 
-  <div class="insight">
-    <div class="insight-title">🤖 信号 4：AI 工具链已标准化，成本不是壁垒</div>
-    <p><strong>行业证据</strong>：WorkRally、Seedance、腾讯云/商汤/万兴工具已非常成熟，爆款《西游》10人团队20天10万成本就能做出来。<br>
-    <strong>对 QQ 的启示</strong>：QQ 不需要自建生产工具，应该聚焦<strong>分发 × 社交 × 互动</strong>的差异化能力。把脑洞秀升级为"UGC漫剧创作+社交平台"——这是行业其他玩家做不了的事情。</p>
+  <div class="signal">
+    <div class="signal-num">04</div>
+    <div class="signal-body">
+      <h3>AI 工具链已标准化，成本不是壁垒</h3>
+      <div class="signal-evidence"><span class="signal-tag">EVIDENCE</span>WorkRally、Seedance、腾讯云 / 商汤 / 万兴工具已非常成熟，爆款《西游》10 人团队 20 天 10 万成本就能做出来。</div>
+      <div class="signal-action"><span class="signal-tag red">ACTION</span>QQ 不需要自建生产工具，应该聚焦 <strong>分发 × 社交 × 互动</strong> 的差异化能力。把脑洞秀升级为"UGC 漫剧创作 + 社交平台"——这是行业其他玩家做不了的事情。</div>
+    </div>
   </div>
 
-  <div class="insight">
-    <div class="insight-title">⚠️ 信号 5：流量规模是CP合作的硬门槛</div>
-    <p><strong>行业证据</strong>：点众原话"给什么内容，关键看你们能给多少流量"——100w DAU 达不到他们的阈值。<br>
-    <strong>对 QQ 的启示</strong>：<strong>路线B（动态页小规模尝试）对CP吸引力过低</strong>，只能拿到阅文二三线内容，用户体验也难撑起循环。<strong>强烈建议走路线A</strong>（底Tab+公众号+动态页+PC，目标千万级DAU），这是与行业头部玩家对话的最低门槛。</p>
+  <div class="signal">
+    <div class="signal-num">05</div>
+    <div class="signal-body">
+      <h3>流量规模是 CP 合作的硬门槛</h3>
+      <div class="signal-evidence"><span class="signal-tag">EVIDENCE</span>点众原话"给什么内容，关键看你们能给多少流量"——100w DAU 达不到他们的阈值。</div>
+      <div class="signal-action"><span class="signal-tag red">ACTION</span><strong>路线 B（动态页小规模尝试）对 CP 吸引力过低</strong>，只能拿到阅文二三线内容，用户体验也难撑起循环。<strong>强烈建议走路线 A</strong>（底 Tab + 公众号 + 动态页 + PC，目标千万级 DAU），这是与行业头部玩家对话的最低门槛。</div>
+    </div>
   </div>
 
-  <div class="insight">
-    <div class="insight-title">📅 信号 6：时间窗口在 2026 Q3-Q4 关闭</div>
-    <p><strong>行业证据</strong>：红果 MAU 3亿、火龙已上线、百度柚漫剧筹备中、小红书/快手/视频号/阿里都在入局。字节主导但未形成绝对垄断。<br>
-    <strong>对 QQ 的启示</strong>：5 月 MVP → 6 月底灰度 → Q3 全量 → Q4 高速增长 的时间表<strong>非常关键</strong>。延迟半年，百度/阿里可能已经圈走一批CP和用户心智。<strong>现在就是最好的入场时机。</strong></p>
+  <div class="signal">
+    <div class="signal-num">06</div>
+    <div class="signal-body">
+      <h3>时间窗口在 2026 Q3-Q4 关闭</h3>
+      <div class="signal-evidence"><span class="signal-tag">EVIDENCE</span>红果 MAU 3 亿、火龙已上线、百度柚漫剧筹备中、小红书 / 快手 / 视频号 / 阿里都在入局。字节主导但未形成绝对垄断。</div>
+      <div class="signal-action"><span class="signal-tag red">ACTION</span>5 月 MVP → 6 月底灰度 → Q3 全量 → Q4 高速增长 的时间表<strong>非常关键</strong>。延迟半年，百度 / 阿里可能已经圈走一批 CP 和用户心智。<strong>现在就是最好的入场时机。</strong></div>
+    </div>
   </div>
 
-  <div class="insight">
-    <div class="insight-title">🌐 信号 7：出海是后手但值得预留接口</div>
-    <p><strong>行业证据</strong>：海外 2025 规模 40亿美元，ReelShort 北美单日流水破百万美金。井漫已 1000部/月。<br>
-    <strong>对 QQ 的启示</strong>：国内 MVP 优先，但 B端工具和内容合约设计时预留<strong>海外分发权</strong>的权益条款，后续可通过 WeSing/QQ国际版或新产品接入海外 IP。</p>
+  <div class="signal">
+    <div class="signal-num">07</div>
+    <div class="signal-body">
+      <h3>出海是后手但值得预留接口</h3>
+      <div class="signal-evidence"><span class="signal-tag">EVIDENCE</span>海外 2025 规模 40 亿美元，ReelShort 北美单日流水破百万美金。井漫已 1000 部 / 月。</div>
+      <div class="signal-action"><span class="signal-tag red">ACTION</span>国内 MVP 优先，但 B 端工具和内容合约设计时预留<strong>海外分发权</strong>的权益条款，后续可通过 WeSing / QQ 国际版或新产品接入海外 IP。</div>
+    </div>
   </div>
 
-  <div class="callout" style="margin-top:24px;">
-    <strong>⭐ 总结给 Neo 的3个决策建议</strong>
-    <ol style="margin-top:8px; padding-left:22px; color:var(--text-dim); font-size:14px;">
-      <li><strong>坚定走路线A</strong>：路线B在当前行业阶段对 CP 吸引力不足，且会错失2026窗口期</li>
-      <li><strong>游戏漫剧是差异化第一王牌</strong>：立即启动与天美/琳琅的三角洲/王者 IP 漫剧联动，这是 QQ 唯一能在字节/百度/阿里面前打出的独占牌</li>
-      <li><strong>女频+UGC脑洞秀 双引擎</strong>：作为社交化差异的长期护城河。小红书联动 + 脑洞秀换脸二创，能把"看漫剧"升级为"玩漫剧"。</li>
+  <div class="verdict">
+    <h3>给 Neo 的 3 个决策建议</h3>
+    <ol>
+      <li><strong>坚定走路线 A</strong>：路线 B 在当前行业阶段对 CP 吸引力不足，且会错失 2026 窗口期。</li>
+      <li><strong>游戏漫剧是差异化第一王牌</strong>：立即启动与天美 / 琳琅的三角洲 / 王者 IP 漫剧联动，这是 QQ 唯一能在字节 / 百度 / 阿里面前打出的独占牌。</li>
+      <li><strong>女频 + UGC 脑洞秀 双引擎</strong>：作为社交化差异的长期护城河。小红书联动 + 脑洞秀换脸二创，能把"看漫剧"升级为"玩漫剧"。</li>
     </ol>
   </div>
 </section>
 
-</main>
-
-<footer class="footer">
-  <div>© 2026 QQMando · 漫剧行业动态监控 · Neo's workspace</div>
-  <div>数据来源：QuestMobile · 艾媒咨询 · DataEye · 36氪 · 澎湃 · 腾讯新闻 · 小红书 等公开信息</div>
+<!-- ================== COLOPHON ================== -->
+<footer class="colophon">
+  <div class="line"><strong>QQMando</strong> · The Weekly Observer of the Manga-Drama Industry</div>
+  <div class="rule"></div>
+  <div class="line">Curated by <strong>Neo</strong> · QQ Mando Project · Tencent</div>
+  <div class="line" style="margin-top:10px;">Sources — QuestMobile · 艾媒咨询 · DataEye · 36氪 · 澎湃 · 腾讯新闻 · 小红书 · 公开信息交叉校验</div>
+  <div class="line" style="margin-top:10px; font-style:italic;">© 2026 QQMando · <span id="last-updated"></span></div>
 </footer>
 
+</main>
+
 <script>
-  // Last updated label
-  const lastUpdated = new Date().toISOString().slice(0,10);
-  document.title = `QQMando · 漫剧行业监控 (更新于 ${lastUpdated})`;
+  // 更新日期
+  const d = new Date();
+  const pad = (n) => String(n).padStart(2,'0');
+  const mon = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'][d.getMonth()];
+  document.getElementById('pub-date').textContent = d.getFullYear()+' · '+mon+' · '+pad(d.getDate());
+  document.getElementById('last-updated').textContent = 'Last updated '+d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+
+  // 平滑滚动定位修正
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if(target){
+        e.preventDefault();
+        const top = target.getBoundingClientRect().top + window.pageYOffset - 70;
+        window.scrollTo({top, behavior:'smooth'});
+      }
+    });
+  });
 </script>
 
 </body>
