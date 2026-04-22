@@ -1003,12 +1003,13 @@ a:hover { color: var(--vermilion); border-bottom-color: var(--vermilion); }
   /* 头条区 */
   .headline-wrap { padding: 28px 16px 24px; }
   .headline-kicker { font-size: 11px; letter-spacing: 0.2em; }
-  .headline-title { font-size: 26px !important; line-height: 1.3; margin: 10px 0 14px; }
+  .headline-title { font-size: 28px !important; line-height: 1.28; margin: 10px 0 14px; letter-spacing: 0.005em; }
   .headline-lead {
-    font-size: 15px;
-    line-height: 1.75;
+    font-size: 16px;
+    line-height: 1.78;
     padding-left: 14px;
     border-left-width: 2px;
+    color: var(--ink);
   }
 
   /* 章节通用 */
@@ -1021,7 +1022,7 @@ a:hover { color: var(--vermilion); border-bottom-color: var(--vermilion); }
     margin-bottom: 20px;
   }
   .section-no { font-size: 42px !important; }
-  .section-title { font-size: 22px !important; line-height: 1.25; }
+  .section-title { font-size: 23px !important; line-height: 1.25; }
   .section-title .en { font-size: 11px !important; margin-top: 2px; }
   .section-date { font-size: 11px; }
 
@@ -1052,94 +1053,163 @@ a:hover { color: var(--vermilion); border-bottom-color: var(--vermilion); }
     min-width: 0;
   }
 
-  /* 爆款榜：封面和排名特殊处理 */
-  .hot-rank-td {
+  /* 爆款榜移动端：海报卡版式（隐藏封面，大排名，右上热度） */
+  /* 每一行视觉上变成一张卡片——仅作用于 .hot-table，不影响平台榜 */
+  .hot-table tbody tr {
+    display: block !important;
+    padding: 16px 14px !important;
+    background: var(--paper);
+    border: 1px solid var(--hairline) !important;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .hot-table tbody tr:last-child { margin-bottom: 0; }
+  .hot-table thead { display: none; }
+  .hot-table tbody td {
+    display: block !important;
+    padding: 0 !important;
+  }
+  .hot-table tbody td::before { display: none !important; }
+
+  /* 1. 隐藏封面色块 */
+  .hot-table td[data-label="封面"] { display: none !important; }
+
+  /* 2. 排名：左上角超大数字，朱砂红 */
+  .hot-table .hot-rank-td {
     font-family: var(--font-display) !important;
     font-weight: 900 !important;
-    font-size: 28px !important;
+    font-size: 42px !important;
     color: var(--vermilion) !important;
-    line-height: 1 !important;
-    padding: 0 0 8px !important;
-    border-bottom: 1px solid var(--hairline);
-    margin-bottom: 10px;
+    line-height: 0.95 !important;
+    letter-spacing: -0.02em;
+    margin: 0 0 2px !important;
+    border: none !important;
+    width: auto !important;
   }
-  .hot-rank-td::before {
-    content: 'RANK';
-    min-width: 0 !important;
-    padding-top: 8px !important;
+
+  /* 3. 热度：绝对定位到右上角，突出显示 */
+  .hot-table .hot-plays-td {
+    position: absolute !important;
+    top: 16px;
+    right: 14px;
+    text-align: right !important;
+    font-family: var(--font-display) !important;
+    font-weight: 800 !important;
+    font-size: 22px !important;
+    color: var(--ink) !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.01em;
+    max-width: 48%;
   }
-  .data-table td[data-label="封面"] {
-    display: block !important;
-    padding: 0 0 12px !important;
+  .hot-table .hot-plays-td .pl {
+    font-size: 10.5px !important;
+    font-weight: 400 !important;
+    color: var(--ink-mute) !important;
+    margin-top: 3px !important;
+    letter-spacing: 0.02em;
+    display: block;
   }
-  .data-table td[data-label="封面"]::before { display: none !important; }
-  .hot-cover {
-    width: 100% !important;
-    height: 64px !important;
-    border-radius: 4px;
-    font-size: 15px !important;
-    letter-spacing: 0.04em;
+
+  /* 4. 标题块：紧跟在排名下面 */
+  .hot-table .hot-title-block {
+    margin-top: 10px;
+    padding-top: 10px !important;
+    border-top: 1px solid var(--hairline);
   }
-  .hot-title-block { padding: 0 !important; }
-  .hot-title-block::before { display: none !important; }
-  .hot-title-td { font-size: 16px !important; line-height: 1.35; margin-bottom: 4px; }
-  .hot-title-link { flex-wrap: wrap; }
-  .hot-play-icon { font-size: 9px; }
-  .hot-jump-hint { font-size: 10px; margin-top: 3px; }
-  .hot-synopsis { font-size: 12.5px !important; line-height: 1.65; margin-top: 8px; }
-  .hot-cell-sub { display: block; margin-top: 2px; font-size: 11px; }
-  .hot-plays-td {
-    font-size: 16px !important;
-    line-height: 1.3;
+  .hot-table .hot-title-td {
+    font-size: 18.5px !important;
+    font-weight: 800 !important;
+    line-height: 1.35 !important;
+    letter-spacing: 0.01em;
+    margin-bottom: 6px !important;
+    color: var(--ink);
   }
-  .hot-plays-td .pl { font-size: 10px !important; margin-top: 3px; }
+  .hot-table .hot-title-link { flex-wrap: wrap; gap: 4px; }
+  .hot-table .hot-play-icon { font-size: 11px !important; }
+  .hot-table .hot-jump-hint {
+    display: block;
+    font-size: 11px !important;
+    margin-top: 5px !important;
+    color: var(--ink-mute);
+    letter-spacing: 0.02em;
+  }
+  .hot-table .hot-alt-link { font-size: 11px; }
+  .hot-table .hot-synopsis {
+    font-size: 13.5px !important;
+    line-height: 1.7 !important;
+    margin-top: 10px !important;
+    color: var(--ink-soft);
+  }
+
+  /* 5. 题材·平台：小字灰色副信息 */
+  .hot-table td[data-label="题材"] {
+    margin-top: 10px !important;
+    padding-top: 10px !important;
+    border-top: 1px dashed var(--hairline);
+    font-size: 12px !important;
+    color: var(--ink-soft) !important;
+    line-height: 1.55 !important;
+  }
+  .hot-table td[data-label="题材"] > div {
+    display: inline;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .hot-table td[data-label="题材"] > div::after { content: ' · '; color: var(--ink-mute); }
+  .hot-table .hot-cell-sub {
+    display: inline !important;
+    font-size: 12px !important;
+    margin: 0 !important;
+    font-style: normal !important;
+    color: var(--ink-soft) !important;
+  }
 
   /* 平台榜：梯队胶囊、量级 */
-  .platform-row-tier { font-size: 11px; padding: 2px 6px; }
-  .platform-row-name { font-size: 14px; }
-  .platform-row-owner { font-size: 11px; }
-  .platform-row-metric { font-size: 20px; }
-  .platform-row-metric-unit { font-size: 10px; }
-  .platform-row-metric-note { font-size: 10px; }
-  .platform-row-high { font-size: 12px; line-height: 1.5; }
-  .platform-row-tag { font-size: 10px; padding: 2px 6px; }
-  .platform-row-source { font-size: 10px; }
+  .platform-row-tier { font-size: 11.5px; padding: 2px 7px; }
+  .platform-row-name { font-size: 15px; }
+  .platform-row-owner { font-size: 11.5px; }
+  .platform-row-metric { font-size: 22px; }
+  .platform-row-metric-unit { font-size: 10.5px; }
+  .platform-row-metric-note { font-size: 10.5px; }
+  .platform-row-high { font-size: 13px; line-height: 1.6; }
+  .platform-row-tag { font-size: 10.5px; padding: 2px 7px; }
+  .platform-row-source { font-size: 10.5px; }
 
   /* 方法论卡片 */
-  .method-box { padding: 12px 14px 10px; margin-bottom: 14px; }
+  .method-box { padding: 14px 16px 12px; margin-bottom: 16px; }
   .method-head {
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
-    padding-bottom: 6px;
-    margin-bottom: 8px;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
   }
-  .method-kicker { font-size: 10px; }
-  .method-window { font-size: 11px; }
-  .method-source { font-size: 11.5px; line-height: 1.6; }
-  .method-list { font-size: 11.5px; line-height: 1.75; padding-left: 18px; }
-  .method-notice { font-size: 10.5px; }
+  .method-kicker { font-size: 10.5px; }
+  .method-window { font-size: 12px; }
+  .method-source { font-size: 13px; line-height: 1.65; }
+  .method-list { font-size: 13px; line-height: 1.8; padding-left: 20px; }
+  .method-notice { font-size: 11.5px; }
 
   /* 要闻区 */
-  .news-cat { margin-bottom: 22px; }
-  .news-cat-head { margin-bottom: 10px; gap: 8px; }
-  .news-cat-title { font-size: 16px; }
+  .news-cat { margin-bottom: 24px; }
+  .news-cat-head { margin-bottom: 12px; gap: 8px; }
+  .news-cat-title { font-size: 17px; }
   .news-cat-icon { font-size: 10px; padding: 2px 7px; }
   .news-item {
-    padding: 12px 0;
+    padding: 14px 0;
     grid-template-columns: 1fr !important;
-    gap: 6px !important;
+    gap: 8px !important;
   }
-  .news-date { font-size: 10px; letter-spacing: 0.05em; }
-  .news-title { font-size: 14px !important; line-height: 1.45 !important; }
-  .news-summary { font-size: 12px !important; line-height: 1.6 !important; }
+  .news-date { font-size: 10.5px; letter-spacing: 0.05em; }
+  .news-title { font-size: 15.5px !important; line-height: 1.45 !important; font-weight: 700; }
+  .news-summary { font-size: 13.5px !important; line-height: 1.7 !important; color: var(--ink-soft); }
   .news-qq {
-    padding: 8px 10px;
-    font-size: 11.5px;
-    line-height: 1.55;
-    margin-top: 8px;
+    padding: 10px 12px;
+    font-size: 12.5px;
+    line-height: 1.65;
+    margin-top: 10px;
   }
-  .news-link { font-size: 11px; }
+  .news-link { font-size: 11.5px; }
 
   /* 政策对比矩阵：横向滚动 */
   .policy-wrap {
@@ -1158,17 +1228,17 @@ a:hover { color: var(--vermilion); border-bottom-color: var(--vermilion); }
     color: var(--ink-mute);
     padding: 6px 0 0;
   }
-  .policy-matrix { min-width: 640px; font-size: 11.5px; }
-  .policy-matrix th { font-size: 10px; padding: 8px 8px; }
-  .policy-matrix td { padding: 10px 8px; font-size: 11.5px; }
+  .policy-matrix { min-width: 680px; font-size: 12.5px; }
+  .policy-matrix th { font-size: 10.5px; padding: 9px 10px; }
+  .policy-matrix td { padding: 11px 10px; font-size: 12.5px; line-height: 1.6; }
 
   /* QQ 策略建议 */
-  .qq-judgement { padding: 16px 14px !important; margin-bottom: 20px; font-size: 13.5px !important; line-height: 1.7 !important; }
+  .qq-judgement { padding: 18px 16px !important; margin-bottom: 20px; font-size: 14.5px !important; line-height: 1.75 !important; }
   .qq-actions { gap: 10px !important; }
   .qq-action {
-    padding: 12px 14px !important;
+    padding: 14px 16px !important;
     grid-template-columns: 1fr !important;
-    gap: 4px !important;
+    gap: 6px !important;
   }
   .qq-action-prio {
     justify-self: start;
@@ -1177,8 +1247,8 @@ a:hover { color: var(--vermilion); border-bottom-color: var(--vermilion); }
     font-size: 11px !important;
     height: auto !important;
   }
-  .qq-action-title { font-size: 14px !important; line-height: 1.4; }
-  .qq-action-rationale { font-size: 12.5px !important; line-height: 1.65 !important; }
+  .qq-action-title { font-size: 15px !important; line-height: 1.4; font-weight: 700; }
+  .qq-action-rationale { font-size: 13.5px !important; line-height: 1.7 !important; color: var(--ink-soft); }
 
   /* 页脚 */
   .colophon { padding: 32px 16px 40px; }
@@ -1188,11 +1258,16 @@ a:hover { color: var(--vermilion); border-bottom-color: var(--vermilion); }
 /* 超窄屏（≤ 380px，iPhone SE 等）微调 */
 @media (max-width: 380px) {
   .masthead-title { font-size: 28px !important; }
-  .headline-title { font-size: 22px !important; }
-  .section-title { font-size: 20px !important; }
+  .headline-title { font-size: 24px !important; }
+  .section-title { font-size: 21px !important; }
   .kpi-value { font-size: 22px !important; }
   .section { padding: 28px 12px 22px; }
   .data-table tr { padding: 12px 10px !important; }
+  /* 爆款榜：排名缩小避让热度数字 */
+  .hot-table .hot-rank-td { font-size: 36px !important; }
+  .hot-table .hot-plays-td { font-size: 19px !important; top: 14px; right: 12px; }
+  .hot-table .hot-title-td { font-size: 17px !important; }
+  .hot-table tbody tr { padding: 14px 12px !important; }
 }
 </style>
 </head>
@@ -1416,7 +1491,7 @@ function renderHot(list, rangeLabel, meta) {
     sec.appendChild(methodBox);
   }
 
-  const tbl = el('table', 'data-table');
+  const tbl = el('table', 'data-table hot-table');
   tbl.innerHTML = `
     <thead>
       <tr>
